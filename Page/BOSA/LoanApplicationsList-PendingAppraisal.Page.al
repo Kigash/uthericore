@@ -1,0 +1,84 @@
+﻿page 50205 "Loan Appl. List-Pending Apprsl"
+{
+    // version TL2.0
+
+    Caption = 'Loans Pending Appraisal';
+    CardPageID = "Loan Application Card";
+    PageType = List;
+    PromotedActionCategories = 'New,Process,Reports,Security,Approval Request,Category 6,Category 7,Category 8';
+    SourceTable = "Loan Application";
+    SourceTableView = WHERE(Status = FILTER("Pending Approval"));
+    UsageCategory = Lists;
+    ApplicationArea = All;
+
+    layout
+    {
+        area(content)
+        {
+            repeater(Group)
+            {
+                field("No."; Rec."No.")
+                {
+                    ApplicationArea = All;
+                }
+                field("Member No."; Rec."Member No.")
+                {
+                    ApplicationArea = All;
+                }
+                field("Member Name"; Rec."Member Name")
+                {
+                    ApplicationArea = All;
+                }
+                field("Loan Product Type"; Rec."Loan Product Type")
+                {
+                    ApplicationArea = All;
+                }
+                field("Repayment Method"; Rec."Repayment Method")
+                {
+                    ApplicationArea = All;
+                }
+                field(Description; Rec.Description)
+                {
+                    ApplicationArea = All;
+                }
+                field("Requested Amount"; Rec."Requested Amount")
+                {
+                    ApplicationArea = All;
+                }
+                field("Loan Officer"; Rec."Loan Officer")
+                {
+                    ApplicationArea = All;
+                }
+            }
+        }
+    }
+
+    actions
+    {
+    }
+
+    trigger OnOpenPage()
+    begin
+        SetActionVisible;
+        CurrPage.Editable(false);
+    end;
+
+    var
+        LoanGuarantor: Record "Loan Guarantor";
+        LoanCollateral: Record "Loan Collateral";
+        //LoanOffset: Record "50106";
+        IsVisibleSendApprovalRequest: Boolean;
+        IsVisibleCancelApprovalRequest: Boolean;
+
+    local procedure SetActionVisible()
+    begin
+        /*IF (("FOSA Account"="FOSA Account"::"1") OR ("FOSA Account"="FOSA Account"::"2") OR
+            ("FOSA Account"="FOSA Account"::"3")) THEN BEGIN
+            IsVisibleSendApprovalRequest:=FALSE;
+            IsVisibleCancelApprovalRequest:=FALSE;
+        END;
+        */
+
+    end;
+}
+

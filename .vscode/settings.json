@@ -1,0 +1,15 @@
+{
+    "git.ignoreLimitWarning": true,
+    "QualifyRecFields": true,
+    "alOutline.codeCleanupActions": [ 
+    "CollapseEmptyBrackets",    
+    "RemoveUnusedVariables",    
+    "RemoveEmptyLines",
+    "FixKeywordsCase",
+    "AddApplicationAreas",
+    "RemoveUnusedVariables"],
+    "al.enableCodeActions": true,
+    "al.enableCodeAnalysis": false,
+    "alOutline.codeActionsOnSave": [
+    "SortProcedures", "SortProperties", "SortReportColumns", "SortVariables"]
+}

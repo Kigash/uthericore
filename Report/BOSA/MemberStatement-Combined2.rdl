@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>2in</Height>
+        <Style />
+      </Body>
+      <Width>6.5in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="ReportTitle">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>ReportTitle</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>ReportTitle</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="No_Member">
+          <DataField>No_Member</DataField>
+        </Field>
+        <Field Name="Surname_Member">
+          <DataField>Surname_Member</DataField>
+        </Field>
+        <Field Name="FullName_Member">
+          <DataField>FullName_Member</DataField>
+        </Field>
+        <Field Name="GlobalDimension1Code_Member">
+          <DataField>GlobalDimension1Code_Member</DataField>
+        </Field>
+        <Field Name="Phone_No_">
+          <DataField>Phone_No_</DataField>
+        </Field>
+        <Field Name="National_ID">
+          <DataField>National_ID</DataField>
+        </Field>
+        <Field Name="Picture">
+          <DataField>Picture</DataField>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+        </Field>
+        <Field Name="Church_District_Code">
+          <DataField>Church_District_Code</DataField>
+        </Field>
+        <Field Name="Section_Name">
+          <DataField>Section_Name</DataField>
+        </Field>
+        <Field Name="Church_Code">
+          <DataField>Church_Code</DataField>
+        </Field>
+        <Field Name="No_Vendor">
+          <DataField>No_Vendor</DataField>
+        </Field>
+        <Field Name="Name_Vendor">
+          <DataField>Name_Vendor</DataField>
+        </Field>
+        <Field Name="BalanceLCY_Vendor">
+          <DataField>BalanceLCY_Vendor</DataField>
+        </Field>
+        <Field Name="BalanceLCY_VendorFormat">
+          <DataField>BalanceLCY_VendorFormat</DataField>
+        </Field>
+        <Field Name="Entry_No_">
+          <DataField>Entry_No_</DataField>
+        </Field>
+        <Field Name="VendorNo_VendorLedgerEntry">
+          <DataField>VendorNo_VendorLedgerEntry</DataField>
+        </Field>
+        <Field Name="PostingDate_VendorLedgerEntry">
+          <DataField>PostingDate_VendorLedgerEntry</DataField>
+        </Field>
+        <Field Name="DocumentType_VendorLedgerEntry">
+          <DataField>DocumentType_VendorLedgerEntry</DataField>
+        </Field>
+        <Field Name="DocumentNo_VendorLedgerEntry">
+          <DataField>DocumentNo_VendorLedgerEntry</DataField>
+        </Field>
+        <Field Name="Description_VendorLedgerEntry">
+          <DataField>Description_VendorLedgerEntry</DataField>
+        </Field>
+        <Field Name="CurrencyCode_VendorLedgerEntry">
+          <DataField>CurrencyCode_VendorLedgerEntry</DataField>
+        </Field>
+        <Field Name="Amount_VendorLedgerEntry">
+          <DataField>Amount_VendorLedgerEntry</DataField>
+        </Field>
+        <Field Name="Amount_VendorLedgerEntryFormat">
+          <DataField>Amount_VendorLedgerEntryFormat</DataField>
+        </Field>
+        <Field Name="RemainingAmount_VendorLedgerEntry">
+          <DataField>RemainingAmount_VendorLedgerEntry</DataField>
+        </Field>
+        <Field Name="RemainingAmount_VendorLedgerEntryFormat">
+          <DataField>RemainingAmount_VendorLedgerEntryFormat</DataField>
+        </Field>
+        <Field Name="Debit_Amount">
+          <DataField>Debit_Amount</DataField>
+        </Field>
+        <Field Name="Debit_AmountFormat">
+          <DataField>Debit_AmountFormat</DataField>
+        </Field>
+        <Field Name="Credit_Amount">
+          <DataField>Credit_Amount</DataField>
+        </Field>
+        <Field Name="Credit_AmountFormat">
+          <DataField>Credit_AmountFormat</DataField>
+        </Field>
+        <Field Name="Reversed">
+          <DataField>Reversed</DataField>
+        </Field>
+        <Field Name="RunningBalance">
+          <DataField>RunningBalance</DataField>
+        </Field>
+        <Field Name="RunningBalanceFormat">
+          <DataField>RunningBalanceFormat</DataField>
+        </Field>
+        <Field Name="No_LoanApplication">
+          <DataField>No_LoanApplication</DataField>
+        </Field>
+        <Field Name="MemberNo_LoanApplication">
+          <DataField>MemberNo_LoanApplication</DataField>
+        </Field>
+        <Field Name="MemberName_LoanApplication">
+          <DataField>MemberName_LoanApplication</DataField>
+        </Field>
+        <Field Name="LoanProductType_LoanApplication">
+          <DataField>LoanProductType_LoanApplication</DataField>
+        </Field>
+        <Field Name="Description_LoanApplication">
+          <DataField>Description_LoanApplication</DataField>
+        </Field>
+        <Field Name="InterestRate_LoanApplication">
+          <DataField>InterestRate_LoanApplication</DataField>
+        </Field>
+        <Field Name="InterestRate_LoanApplicationFormat">
+          <DataField>InterestRate_LoanApplicationFormat</DataField>
+        </Field>
+        <Field Name="RepaymentPeriod_LoanApplication">
+          <DataField>RepaymentPeriod_LoanApplication</DataField>
+        </Field>
+        <Field Name="RepaymentMethod_LoanApplication">
+          <DataField>RepaymentMethod_LoanApplication</DataField>
+        </Field>
+        <Field Name="RequestedAmount_LoanApplication">
+          <DataField>RequestedAmount_LoanApplication</DataField>
+        </Field>
+        <Field Name="RequestedAmount_LoanApplicationFormat">
+          <DataField>RequestedAmount_LoanApplicationFormat</DataField>
+        </Field>
+        <Field Name="ApprovedAmount_LoanApplication">
+          <DataField>ApprovedAmount_LoanApplication</DataField>
+        </Field>
+        <Field Name="ApprovedAmount_LoanApplicationFormat">
+          <DataField>ApprovedAmount_LoanApplicationFormat</DataField>
+        </Field>
+        <Field Name="TotalSavingsAmount_LoanApplication">
+          <DataField>TotalSavingsAmount_LoanApplication</DataField>
+        </Field>
+        <Field Name="TotalSavingsAmount_LoanApplicationFormat">
+          <DataField>TotalSavingsAmount_LoanApplicationFormat</DataField>
+        </Field>
+        <Field Name="Outstanding_Balance">
+          <DataField>Outstanding_Balance</DataField>
+        </Field>
+        <Field Name="Outstanding_BalanceFormat">
+          <DataField>Outstanding_BalanceFormat</DataField>
+        </Field>
+        <Field Name="Date_of_Completion">
+          <DataField>Date_of_Completion</DataField>
+        </Field>
+        <Field Name="PayableInstallment">
+          <DataField>PayableInstallment</DataField>
+        </Field>
+        <Field Name="PayableInstallmentFormat">
+          <DataField>PayableInstallmentFormat</DataField>
+        </Field>
+        <Field Name="Disbursal_Date">
+          <DataField>Disbursal_Date</DataField>
+        </Field>
+        <Field Name="OutStandingInt">
+          <DataField>OutStandingInt</DataField>
+        </Field>
+        <Field Name="OutStandingIntFormat">
+          <DataField>OutStandingIntFormat</DataField>
+        </Field>
+        <Field Name="Entry_No_2">
+          <DataField>Entry_No_2</DataField>
+        </Field>
+        <Field Name="CustomerNo_CustLedgerEntry">
+          <DataField>CustomerNo_CustLedgerEntry</DataField>
+        </Field>
+        <Field Name="PostingDate_CustLedgerEntry">
+          <DataField>PostingDate_CustLedgerEntry</DataField>
+        </Field>
+        <Field Name="DocumentType_CustLedgerEntry">
+          <DataField>DocumentType_CustLedgerEntry</DataField>
+        </Field>
+        <Field Name="DocumentNo_CustLedgerEntry">
+          <DataField>DocumentNo_CustLedgerEntry</DataField>
+        </Field>
+        <Field Name="Description_CustLedgerEntry">
+          <DataField>Description_CustLedgerEntry</DataField>
+        </Field>
+        <Field Name="CurrencyCode_CustLedgerEntry">
+          <DataField>CurrencyCode_CustLedgerEntry</DataField>
+        </Field>
+        <Field Name="Amount_CustLedgerEntry">
+          <DataField>Amount_CustLedgerEntry</DataField>
+        </Field>
+        <Field Name="Amount_CustLedgerEntryFormat">
+          <DataField>Amount_CustLedgerEntryFormat</DataField>
+        </Field>
+        <Field Name="RemainingAmount_CustLedgerEntry">
+          <DataField>RemainingAmount_CustLedgerEntry</DataField>
+        </Field>
+        <Field Name="RemainingAmount_CustLedgerEntryFormat">
+          <DataField>RemainingAmount_CustLedgerEntryFormat</DataField>
+        </Field>
+        <Field Name="RunningBalance2">
+          <DataField>RunningBalance2</DataField>
+        </Field>
+        <Field Name="RunningBalance2Format">
+          <DataField>RunningBalance2Format</DataField>
+        </Field>
+        <Field Name="Debit_Amount2">
+          <DataField>Debit_Amount2</DataField>
+        </Field>
+        <Field Name="Debit_Amount2Format">
+          <DataField>Debit_Amount2Format</DataField>
+        </Field>
+        <Field Name="Credit_Amount2">
+          <DataField>Credit_Amount2</DataField>
+        </Field>
+        <Field Name="Credit_Amount2Format">
+          <DataField>Credit_Amount2Format</DataField>
+        </Field>
+        <Field Name="Reversed2">
+          <DataField>Reversed2</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

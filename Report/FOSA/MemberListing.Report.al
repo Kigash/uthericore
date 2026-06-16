@@ -1,0 +1,229 @@
+report 50005 "Member Listing Report"
+{
+    UsageCategory = ReportsAndAnalysis;
+    ApplicationArea = All;
+    DefaultLayout = RDLC;
+    RDLCLayout = 'Report/FOSA/Member Listing.rdl';
+
+
+    dataset
+    {
+        dataitem(DataItemName; Member)
+        {
+            DataItemTableView = where(Category = filter('Individual'));
+            RequestFilterFields = "No.", "Global Dimension 1 Code", Status, Gender;
+
+            column(No_; "No.")
+            {
+            }
+            column(Full_Name; "Full Name")
+            {
+            }
+            column(Global_Dimension_1_Code; "Global Dimension 1 Code")
+            {
+            }
+            column(Date_of_Birth; "Date of Birth")
+            {
+            }
+            column(National_ID; "National ID")
+            {
+            }
+            column(Gender; Gender)
+            {
+            }
+            column(Status; Status)
+            {
+            }
+            column(Approval_Date; "Approval Date")
+            {
+            }
+            column(Introducer_Member_No_; "Introducer Member No.")
+            {
+            }
+            column(Introducer_Member_Name; "Introducer Member Name")
+            {
+            }
+            column(ShareCap; AccountBal[1])
+            {
+            }
+            column(Deposits; AccountBal[2])
+            {
+            }
+            column(Ordinary; AccountBal[3])
+            {
+            }
+            column(FieldColl; AccountBal[4])
+            {
+            }
+            column(Estate; AccountBal[6])
+            {
+            }
+            column(Xmas; AccountBal[7])
+            {
+            }
+            column(Registration_Date; "Registration Date")
+            {
+
+            }
+            column(Phone_No_; "Phone No.")
+            {
+
+            }
+            column(Name; CompanyInformation.Name)
+            {
+            }
+            column(Address; CompanyInformation.Address)
+            {
+            }
+            column(City; CompanyInformation.City)
+            {
+            }
+            column(Post_Code; CompanyInformation."Post Code")
+            {
+            }
+            column(Picture; CompanyInformation.Picture)
+            {
+            }
+            trigger OnAfterGetRecord()
+            begin
+                GetAccountBalances("No.");
+                if ChurchSection.Get("Church Section Code") then
+                    SectionName := ChurchSection.Name;
+            end;
+
+            trigger OnPreDataItem()
+            begin
+                CompanyInformation.Get();
+                CompanyInformation.CalcFields(Picture);
+                if AsAtDate = 0D then
+                    AsAtDate := Today;
+            end;
+        }
+    }
+
+    requestpage
+    {
+
+
+        layout
+        {
+            area(content)
+            {
+                field(AsAtDate; AsAtDate)
+                {
+                    Caption = 'As At Date';
+                    ApplicationArea = All;
+                }
+            }
+        }
+
+
+        actions
+        {
+            area(processing)
+            {
+                action(ActionName)
+                {
+                    ApplicationArea = All;
+
+                }
+            }
+        }
+    }
+
+    var
+        AccountBal: array[17] of Decimal;
+        AccountType: Record "Account Type";
+        Vendor: Record Vendor;
+        CompanyInformation: Record "Company Information";
+        AsAtDate: date;
+        SectionName: text[150];
+        ChurchSection: Record "Church Section";
+
+    procedure GetAccountBalances(var MemberNo: Code[20])
+    var
+        DetVend: Record "Detailed Vendor Ledg. Entry";
+    begin
+        Clear(AccountBal);
+        AccountType.Reset();
+        AccountType.SetFilter(Type, '%1|%2|%3', AccountType.Type::"Member Deposit", AccountType.Type::Savings, AccountType.Type::"Share Capital");
+        if AccountType.FindSet() then begin
+            repeat
+                Vendor.Reset();
+                Vendor.SetRange("Member No.", MemberNo);
+                Vendor.SetRange("Account Type", AccountType.Code);
+                if Vendor.FindFirst() then begin
+                    Vendor.CalcFields(Balance);
+
+                    if AccountType.Type = AccountType.Type::"Share Capital" then begin
+                        DetVend.Reset();
+                        DetVend.SetRange("Vendor No.", Vendor."No.");
+                        DetVend.SetFilter("Posting Date", '<=%1', AsAtDate);
+                        if DetVend.FindSet then begin
+                            DetVend.CalcSums(Amount);
+                            AccountBal[1] := ABS(DetVend.Amount);
+                        end;
+                    end;
+
+                    if AccountType.Type = AccountType.Type::"Member Deposit" then begin
+                        DetVend.Reset();
+                        DetVend.SetRange("Vendor No.", Vendor."No.");
+                        DetVend.SetFilter("Posting Date", '<=%1', AsAtDate);
+                        if DetVend.FindSet then begin
+                            DetVend.CalcSums(Amount);
+                            AccountBal[2] := ABS(DetVend.Amount);
+                        end;
+                    end;
+
+                    if AccountType.Type = AccountType.Type::Savings then begin
+                        if AccountType."Sub Type" = AccountType."Sub Type"::Ordinary then begin
+                            DetVend.Reset();
+                            DetVend.SetRange("Vendor No.", Vendor."No.");
+                            DetVend.SetFilter("Posting Date", '<=%1', AsAtDate);
+                            if DetVend.FindSet then begin
+                                DetVend.CalcSums(Amount);
+                                AccountBal[3] := ABS(DetVend.Amount);
+                            end;
+                        end;
+                    end;
+
+                    if AccountType.Type = AccountType.Type::Savings then begin
+                        if AccountType."Sub Type" = AccountType."Sub Type"::"Field Collection" then begin
+                            DetVend.Reset();
+                            DetVend.SetRange("Vendor No.", Vendor."No.");
+                            DetVend.SetFilter("Posting Date", '<=%1', AsAtDate);
+                            if DetVend.FindSet then begin
+                                DetVend.CalcSums(Amount);
+                                AccountBal[4] := ABS(DetVend.Amount);
+                            end;
+                        end;
+                    end;
+
+                    if AccountType.Type = AccountType.Type::Savings then begin
+                        if AccountType."Sub Type" = AccountType."Sub Type"::Estate then begin
+                            DetVend.Reset();
+                            DetVend.SetRange("Vendor No.", Vendor."No.");
+                            DetVend.SetFilter("Posting Date", '<=%1', AsAtDate);
+                            if DetVend.FindSet then begin
+                                DetVend.CalcSums(Amount);
+                                AccountBal[6] := ABS(DetVend.Amount);
+                            end;
+                        end;
+                    end;
+
+                    if AccountType.Type = AccountType.Type::Savings then begin
+                        if AccountType."Sub Type" = AccountType."Sub Type"::Christmas then begin
+                            DetVend.Reset();
+                            DetVend.SetRange("Vendor No.", Vendor."No.");
+                            DetVend.SetFilter("Posting Date", '<=%1', AsAtDate);
+                            if DetVend.FindSet then begin
+                                DetVend.CalcSums(Amount);
+                                AccountBal[7] := ABS(DetVend.Amount);
+                            end;
+                        end;
+                    end;
+                end;
+            until AccountType.Next() = 0;
+        end;
+    end;
+}
