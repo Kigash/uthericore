@@ -6,6 +6,8 @@
         {
             field("Transaction Type Code"; Rec."Transaction Type Code")
             {
+                ApplicationArea = All;
+                Editable = false;
             }
             field(Reversed; Reversed)
             {

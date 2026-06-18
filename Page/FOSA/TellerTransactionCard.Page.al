@@ -131,7 +131,7 @@
                     Rec.ValidateTellerTransaction();
                     if Confirm(PostConfirmMsg, true) then begin
                         TelleringTreasury.PostTellerTransaction(Rec);
-                        BOSAManagement.SendTellerTransactionNotification(Rec);
+                        //BOSAManagement.SendTellerTransactionNotification(Rec);
                         CurrPage.Close();
                     end else
                         exit;
@@ -171,7 +171,7 @@
                         Rec.Status := Rec.Status::New;
                         Rec.Modify(true);
 
-                        BOSAManagement.SendTellerReversalNotification(Rec);
+                        //BOSAManagement.SendTellerReversalNotification(Rec);
 
                         Message(ReversalSuccessMsg, Rec."No.");
                     end;

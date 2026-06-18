@@ -98,6 +98,17 @@
 
                 }
             }
+            group(TransactionCoinage)
+            {
+                Caption = 'Transaction Coinage';
+                Visible = true;
+                part("Transaction Coinage Setup"; "Transaction Coinage Setup")
+                {
+                    ApplicationArea = All;
+                    UpdatePropagation = Both;
+                    SubPageLink = "Transaction No." = field("No.");
+                }
+            }
         }
     }
 

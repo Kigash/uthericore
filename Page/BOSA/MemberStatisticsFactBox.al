@@ -8,65 +8,31 @@ page 50041 MemberStatisticsFactBox
     {
         area(content)
         {
-            group(Member)
+            field(Deposit; Deposit)
             {
-                Caption = '';
-                Visible = (Rec.Category = 0) or (Rec.Category = 3);
-                field(Deposit; Deposit)
-                {
-                    Caption = 'Member Deposits';
-                    ApplicationArea = All;
-                }
-                field(Shares; Shares)
-                {
-                    Caption = 'Share Capital';
-                    ApplicationArea = All;
-                }
-                field(Ordinary; Ordinary)
-                {
-                    Caption = 'Ordinary Savings';
-                    ApplicationArea = All;
-                }
-                field(FieldColl; FieldColl)
-                {
-                    Caption = 'Field Collection';
-                    ApplicationArea = All;
-                }
-                field(OfficeColl; OfficeColl)
-                {
-                    Caption = 'Office Collection';
-                    ApplicationArea = All;
-                }
-                field(Estate; Estate)
-                {
-                    Caption = 'Estate';
-                    ApplicationArea = All;
-                }
-                field(Xmas; Xmas)
-                {
-                    Caption = 'Christmas';
-                    ApplicationArea = All;
-                }
+                Caption = 'Unwithdrawable Member Deposits';
+                ApplicationArea = All;
             }
-            group(Group)
+            field(Shares; Shares)
             {
-                Caption = '';
-                Visible = Rec.Category = 1;
-                field(GDeposit; GDeposit)
-                {
-                    Caption = 'Group Deposits';
-                    ApplicationArea = All;
-                }
-                field(GShares; GShares)
-                {
-                    Caption = 'Group Share Capital';
-                    ApplicationArea = All;
-                }
-                field(GOrdinary; GOrdinary)
-                {
-                    Caption = 'Group Ordinary Savings';
-                    ApplicationArea = All;
-                }
+                Caption = 'Share Capital';
+                ApplicationArea = All;
+            }
+
+            field(FieldColl; FieldColl)
+            {
+                Caption = 'Withdrawable Deposits Held';
+                ApplicationArea = All;
+            }
+            field(OfficeColl; OfficeColl)
+            {
+                Caption = 'Withdrawable Deposits Available';
+                ApplicationArea = All;
+            }
+            field(Ordinary; Ordinary)
+            {
+                Caption = 'Total Withdrawable Deposits';
+                ApplicationArea = All;
             }
             field("Loan Outstanding Interest"; OutInt)
             {
@@ -116,6 +82,7 @@ page 50041 MemberStatisticsFactBox
                 Deposit := Vend.Balance;
             end;
         end;
+
         AccType.Reset();
         AccType.SetRange(AccType.Type, AccType.Type::"Share Capital");
         if AccType.FindFirst() then begin
@@ -127,6 +94,7 @@ page 50041 MemberStatisticsFactBox
                 Shares := Vend.Balance;
             end;
         end;
+
         AccType.Reset();
         AccType.SetRange(AccType.Type, AccType.Type::Savings);
         AccType.SetRange(AccType."Sub Type", AccType."Sub Type"::Ordinary);
@@ -135,95 +103,13 @@ page 50041 MemberStatisticsFactBox
             Vend.SetRange("Member No.", Rec."No.");
             Vend.SetRange("Account Type", AccType.Code);
             if Vend.FindFirst() then begin
-                Vend.CalcFields(Balance);
+                Vend.CalcFields(Balance, "Withheld Sep10th 2024 Balance", "Deposits From Sep10th 2024 Balance");
                 Ordinary := Vend.Balance;
+                FieldColl := Vend."Withheld Sep10th 2024 Balance";
+                OfficeColl := Vend."Deposits From Sep10th 2024 Balance";
             end;
         end;
-        AccType.Reset();
-        AccType.SetRange(AccType.Type, AccType.Type::"Member Deposit");
-        AccType.SetRange("Applies to Member Category", AccType."Applies to Member Category"::Group);
-        if AccType.FindFirst() then begin
-            Vend.Reset();
-            Vend.SetRange("Member No.", Rec."No.");
-            Vend.SetRange("Account Type", AccType.Code);
-            if Vend.FindFirst() then begin
-                Vend.CalcFields(Balance);
-                GDeposit := Vend.Balance;
-            end;
-        end;
-        AccType.Reset();
-        AccType.SetRange(AccType.Type, AccType.Type::"Share Capital");
-        AccType.SetRange("Applies to Member Category", AccType."Applies to Member Category"::Group);
-        if AccType.FindFirst() then begin
-            Vend.Reset();
-            Vend.SetRange("Member No.", Rec."No.");
-            Vend.SetRange("Account Type", AccType.Code);
-            if Vend.FindFirst() then begin
-                Vend.CalcFields(Balance);
-                GShares := Vend.Balance;
-            end;
-        end;
-        AccType.Reset();
-        AccType.SetRange(AccType.Type, AccType.Type::Savings);
-        AccType.SetRange("Applies to Member Category", AccType."Applies to Member Category"::Group);
-        AccType.SetRange(AccType."Sub Type", AccType."Sub Type"::Ordinary);
-        if AccType.FindFirst() then begin
-            Vend.Reset();
-            Vend.SetRange("Member No.", Rec."No.");
-            Vend.SetRange("Account Type", AccType.Code);
-            if Vend.FindFirst() then begin
-                Vend.CalcFields(Balance);
-                GOrdinary := Vend.Balance;
-            end;
-        end;
-        AccType.Reset();
-        AccType.SetRange(AccType.Type, AccType.Type::Savings);
-        AccType.SetRange(AccType."Sub Type", AccType."Sub Type"::"Field Collection");
-        if AccType.FindFirst() then begin
-            Vend.Reset();
-            Vend.SetRange("Member No.", Rec."No.");
-            Vend.SetRange("Account Type", AccType.Code);
-            if Vend.FindFirst() then begin
-                Vend.CalcFields(Balance);
-                FieldColl := Vend.Balance;
-            end;
-        end;
-        AccType.Reset();
-        AccType.SetRange(AccType.Type, AccType.Type::Savings);
-        AccType.SetRange(AccType."Sub Type", AccType."Sub Type"::"Office Collection");
-        if AccType.FindFirst() then begin
-            Vend.Reset();
-            Vend.SetRange("Member No.", Rec."No.");
-            Vend.SetRange("Account Type", AccType.Code);
-            if Vend.FindFirst() then begin
-                Vend.CalcFields(Balance);
-                OfficeColl := Vend.Balance;
-            end;
-        end;
-        AccType.Reset();
-        AccType.SetRange(AccType.Type, AccType.Type::Savings);
-        AccType.SetRange(AccType."Sub Type", AccType."Sub Type"::Estate);
-        if AccType.FindFirst() then begin
-            Vend.Reset();
-            Vend.SetRange("Member No.", Rec."No.");
-            Vend.SetRange("Account Type", AccType.Code);
-            if Vend.FindFirst() then begin
-                Vend.CalcFields(Balance);
-                Estate := Vend.Balance;
-            end;
-        end;
-        AccType.Reset();
-        AccType.SetRange(AccType.Type, AccType.Type::Savings);
-        AccType.SetRange(AccType."Sub Type", AccType."Sub Type"::Christmas);
-        if AccType.FindFirst() then begin
-            Vend.Reset();
-            Vend.SetRange("Member No.", Rec."No.");
-            Vend.SetRange("Account Type", AccType.Code);
-            if Vend.FindFirst() then begin
-                Vend.CalcFields(Balance);
-                Xmas := Vend.Balance;
-            end;
-        end;
+
         Tsetup.Get();
 
 

@@ -30,6 +30,15 @@ table 50045 "Coinage Setup"
         }
     }
 
+
+    fieldgroups
+    {
+        fieldgroup(DropDown; "Code", "Value")
+        {
+        }
+
+    }
+
     var
         myInt: Integer;
 

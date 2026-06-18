@@ -85,6 +85,16 @@ table 50169 "FOSA Cue"
 
 
         }
+        field(25; "Total Withheld Sep10th 2024 Balance"; Decimal)
+        {
+
+
+        }
+        field(26; "Total Deposits From Sep10th 2024 Balance"; Decimal)
+        {
+
+
+        }
 
 
 

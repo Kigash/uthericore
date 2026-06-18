@@ -195,7 +195,7 @@ codeunit 50004 "Tellering & Treasury"
                 if Confirm(PrintTransactionReceiptConfirmMsg, true) then begin
                     TellerTransactionHeader.Get("No.");
                     TellerTransactionHeader.SETRECFILTER;
-                    Report.Run(50004, true, false, TellerTransactionHeader);
+                    Report.Run(51104, true, false, TellerTransactionHeader);
                 end;
                 Posted := true;
                 "Posted By" := UserId;

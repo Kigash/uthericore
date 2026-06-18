@@ -207,7 +207,7 @@
                         Rec.Status := Rec.Status::New;
                         Rec.Modify(true);
 
-                        BOSAManagement.SendTellerReversalNotification(Rec);
+                        //BOSAManagement.SendTellerReversalNotification(Rec);
 
                         Message(ReversalSuccessMsg, Rec."No.");
                     end;

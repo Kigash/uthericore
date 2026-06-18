@@ -12,9 +12,32 @@
             {
                 Caption = 'Account Balances';
                 CuegroupLayout = Wide;
+                field("Total Withheld Sep10th 2024 Balance"; Rec."Total Withheld Sep10th 2024 Balance")
+                {
+                    Caption = 'Total Withheld Sep10th 2024 Balance';
+                    ApplicationArea = All;
+                    trigger OnDrillDown()
+                    var
+
+                    begin
+                        Page.Run(50033);
+                    end;
+                }
+                field("Total Deposits From Sep10th 2024 Balance"; ABS(Rec."Total Deposits From Sep10th 2024 Balance"))
+                {
+                    Caption = 'Total Deposits From Sep10th 2024 Balance';
+                    ApplicationArea = All;
+                    trigger OnDrillDown()
+                    var
+
+                    begin
+                        Page.Run(50033);
+                    end;
+                }
+
                 field(TotalOrdinarySavings; ABS(Rec.TotalOrdinarySavings))
                 {
-                    Caption = 'Total Savings';
+                    Caption = 'Total Withdrawable Deposits';
                     ApplicationArea = All;
                     trigger OnDrillDown()
                     var
@@ -25,7 +48,7 @@
                 }
                 field(TotalDeposits; ABS(Rec.TotalDeposits))
                 {
-                    Caption = 'Total Deposits';
+                    Caption = 'Total Unwithdrawable Deposits';
                     ApplicationArea = All;
                     trigger OnDrillDown()
                     var
@@ -45,29 +68,6 @@
                         Page.Run(50033);
                     end;
                 }
-                field(TotalFixedDeposits; ABS(Rec.TotalFixedDeposits))
-                {
-                    Caption = 'Total Fixed Deposits';
-                    ApplicationArea = All;
-                    trigger OnDrillDown()
-                    var
-
-                    begin
-                        Page.Run(50033);
-                    end;
-                }
-                // field(TotalLoans; ABS(TotalLoans))
-                // {
-                //     Caption = 'Total Loans';
-                //     ApplicationArea = All;
-                //     trigger OnDrillDown()
-                //     var
-                //         Vendor: Record Vendor;
-                //     begin
-                //         Vendor.Reset();
-                //         Page.Run(50033);
-                //     end;
-                // }
             }
             cuegroup(MemberCueContainer)
             {
@@ -116,8 +116,6 @@
                     DrillDownPageId = "Mobile Banking Members List";
                     ApplicationArea = All;
                 }
-
-
             }
             cuegroup(ChequeBookCueContainer)
             {
@@ -135,13 +133,7 @@
                     DrillDownPageId = "Cheque Book List-Issued";
                     ApplicationArea = All;
                 }
-
-
             }
-
-
-
-
 
             cuegroup(MemberApplicationActionContainer)
             {
@@ -210,7 +202,7 @@
             cuegroup(ATMApplicationActionContainer)
             {
                 Caption = 'ATM Application';
-
+                Visible = false;
                 actions
                 {
 
@@ -231,7 +223,7 @@
             cuegroup(AgentApplicationActionContainer)
             {
                 Caption = 'Agent Application';
-
+                Visible = false;
                 actions
                 {
 
@@ -274,15 +266,16 @@
                 Vendor.SetRange("Account Type", AccountType.Code);
                 if Vendor.FindSet() then begin
                     repeat
-                        Vendor.CalcFields("Balance (LCY)");
-                        if AccountType.Type = AccountType.Type::Savings then
+                        Vendor.CalcFields("Balance (LCY)", "Withheld Sep10th 2024 Balance", "Deposits From Sep10th 2024 Balance");
+                        if AccountType.Type = AccountType.Type::Savings then begin
                             Rec.TotalOrdinarySavings += Vendor."Balance (LCY)";
+                            Rec."Total Withheld Sep10th 2024 Balance" += Vendor."Withheld Sep10th 2024 Balance";
+                            Rec."Total Deposits From Sep10th 2024 Balance" += Vendor."Deposits From Sep10th 2024 Balance";
+                        end;
                         if AccountType.Type = AccountType.Type::"Member Deposit" then
                             Rec.TotalDeposits += Vendor."Balance (LCY)";
                         if AccountType.Type = AccountType.Type::"Share Capital" then
                             Rec.TotalShares += Vendor."Balance (LCY)";
-                        if AccountType.Type = AccountType.Type::"Fixed Deposit" then
-                            Rec.TotalFixedDeposits += Vendor."Balance (LCY)";
 
                     until Vendor.Next() = 0
                 end;

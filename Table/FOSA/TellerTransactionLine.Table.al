@@ -65,7 +65,7 @@ table 50043 "Teller Transaction Line"
             begin
                 ClearAmounts();
                 ValidateAccountNo();
-                //ValidateTotalAmount();
+                ValidateTotalAmount();
             end;
         }
         field(7; "Account Type"; Option)
@@ -194,7 +194,16 @@ table 50043 "Teller Transaction Line"
     }
     local procedure ClearAmounts()
     begin
-        //Clear("Line Amount");
+        Clear("Account No.");
+        Clear("Account Name");
+        Clear("Account Type");
+        Clear("Bank Acc No");
+        Clear("Is Bank Deposit");
+        Clear("Is Cheque");
+        Clear("Cheque No");
+        Clear("Transaction Charge");
+
+        Clear("Line Amount");
         Clear("Debit Amount");
         Clear("Credit Amount");
     end;

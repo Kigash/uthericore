@@ -32,8 +32,13 @@ page 56351 "Teller RoleCenter"
                         RunObject = Page "Teller Transactions-Posted";
                         ApplicationArea = All;
                     }
+                    action("Cashier Transactions Report")
+                    {
+                        Caption = 'Cashier Reports';
+                        RunObject = report "Cashier Transactions Report";
+                        ApplicationArea = All;
+                    }
                 }
-
                 group("Teller Close Till")
                 {
                     Caption = 'Open/Close Till';
@@ -63,30 +68,8 @@ page 56351 "Teller RoleCenter"
                         ApplicationArea = All;
                     }
                 }
-                group(PaymentVouchers)
-                {
-                    Caption = 'Payments Vouchers';
-
-                    action(NewPaymentVoucherlist)
-                    {
-                        ApplicationArea = Basic, Suite;
-                        Caption = 'New Payment Vouchers';
-                        Image = CashFlow;
-                        RunObject = Page "Payment Voucher List-New";
-                        ToolTip = 'Reconcile all Payment Voucher List stage';
-                    }
-                    action(PostedPaymentVoucherlist)
-                    {
-                        ApplicationArea = Basic, Suite;
-                        Caption = 'Posted Payment Vouchers';
-                        Image = CashFlow;
-                        RunObject = Page "Payment Voucher List-Posted";
-                        ToolTip = 'Reconcile all Posted Payment Voucher stage';
-                    }
-                }
                 group("InterTeller Transfer")
                 {
-                    Visible = false;
                     action("New InterTeller Transfers")
                     {
                         RunObject = Page "InterTeller Transfers-New";
@@ -114,29 +97,7 @@ page 56351 "Teller RoleCenter"
                     }
                 }
             }
-            group(TellerTreasuryACS)
-            {
-                Caption = 'Cashiers and Treasury Accounts';
-                action("Treasury Account List")
-                {
-                    RunObject = Page "Treasury List";
-                    ApplicationArea = All;
-                }
-                action("Cashier Account List")
-                {
-                    RunObject = Page "Cashier Account List";
-                    ApplicationArea = All;
-                }
-                group(CashierReports)
-                {
-                    Caption = 'Cashier Reports';
-                    action("Cashier Transactions Report")
-                    {
-                        RunObject = report "Cashier Transactions Report";
-                        ApplicationArea = All;
-                    }
-                }
-            }
+
             group(Treasury)
             {
                 Visible = true;
@@ -174,34 +135,7 @@ page 56351 "Teller RoleCenter"
                         ApplicationArea = All;
                     }
                 }
-                group("Treasury Return To Bank")
-                {
-                    action("New Treasury Return To Bank")
-                    {
-                        RunObject = Page "Treasury Return Bank List-New";
-                        ApplicationArea = All;
-                    }
-                    action("Pending Treasury Return To Bank")
-                    {
-                        RunObject = Page "Treasury Return Bank-Pending";
-                        ApplicationArea = All;
-                    }
-                    action("Approved Treasury Return To Bank")
-                    {
-                        RunObject = Page "Treasury Return Bank-Approved";
-                        ApplicationArea = All;
-                    }
-                    action("Rejected Treasury Return To Bank")
-                    {
-                        RunObject = Page "Treasury Return Bank-Rejected";
-                        ApplicationArea = All;
-                    }
-                    action("Posted Treasury Return To Bank")
-                    {
-                        RunObject = Page "Treasury Return Bank-Posted";
-                        ApplicationArea = All;
-                    }
-                }
+
             }
 
 
@@ -276,20 +210,34 @@ page 56351 "Teller RoleCenter"
                     }
                 }
             }
-            group("Group")
+            group(LoanApplication)
             {
-                Caption = 'General Ledger';
-                action("Chart of Accounts")
+                Caption = 'Loan Application';
+
+                action("New Loan Application")
                 {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Chart of Accounts';
-                    RunObject = page "Chart of Accounts";
+                    RunObject = Page "Loan Application List-New";
+                    ApplicationArea = All;
                 }
-                action("General Journals1")
+                action("Loans Pending Appraisal")
                 {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'General Journals';
-                    RunObject = page "General Journal";
+                    RunObject = Page "Loan Appl. List-Pending Apprsl";
+                    ApplicationArea = All;
+                }
+                action("Loans Pending Disbursal")
+                {
+                    RunObject = Page "Loan Appl. List-Pending Dbsl";
+                    ApplicationArea = All;
+                }
+                action("Rejected Loans")
+                {
+                    RunObject = Page "Loans Appl. List-Rejected";
+                    ApplicationArea = All;
+                }
+                action("Posted Loans")
+                {
+                    RunObject = Page "Loan Applications List-Posted";
+                    ApplicationArea = All;
                 }
             }
             group(FundTransfer)
@@ -305,142 +253,25 @@ page 56351 "Teller RoleCenter"
                 {
                     ApplicationArea = All;
                     RunObject = page "Fund Transfer List-Pending";
-
                 }
                 action("Approved Fund Transfer")
                 {
                     ApplicationArea = All;
                     RunObject = page "Fund Transfer List-Approved";
-
                 }
                 action("Rejected Fund Transfer")
                 {
                     ApplicationArea = All;
                     RunObject = page "Fund Transfer List-Rejected";
-
                 }
                 action("Posted Fund Transfer")
                 {
                     ApplicationArea = All;
                     RunObject = page "Fund Transfer List-Posted";
-
                 }
             }
-            group(SavingsWithManagement)
-            {
-                Caption = 'Savings Withdrawal';
-                action("New Member Savings Withdrawal")
-                {
-                    ApplicationArea = All;
-                    RunObject = page "Member Savings With List-New";
 
-                }
-                action("Pending Member Savings Withdrawal")
-                {
-                    ApplicationArea = All;
-                    RunObject = page "MemberSavings WithList-Pending";
 
-                }
-                action("Approved Member Savings Withdrawal")
-                {
-                    ApplicationArea = All;
-                    RunObject = page "Member Savings With-Approved";
-
-                }
-                action("Posted Member Savings Withdrawal")
-                {
-                    ApplicationArea = All;
-                    RunObject = page "MemberSavings WithList-Posted";
-
-                }
-                action("Rejected Member Savings Withdrawal")
-                {
-                    ApplicationArea = All;
-                    RunObject = page "MemberSavings WithList-Rejectd";
-
-                }
-            }
-            group(MobileBanking)
-            {
-                Caption = 'Mobile Banking';
-                group(MobileBankingApplication)
-                {
-                    Caption = 'Mobile Banking Application';
-                    action(NewMobileBankingpplication)
-                    {
-                        Caption = 'New Mobile Banking Applications';
-                        RunObject = page "Mobile Banking Appl. List-NEw";
-                        ApplicationArea = All;
-                    }
-                    action(PendingMobileBankingApplication)
-                    {
-                        Caption = 'Pending Mobile Banking Applications';
-                        RunObject = page "Mobile Bk Appl. List-Pending";
-                        ApplicationArea = All;
-                    }
-                    action(ApprovedMobileBankingApplication)
-                    {
-                        Caption = 'Approved Mobile Banking Applications';
-                        RunObject = page "Mobile Bk Appl. List-Approved";
-                        ApplicationArea = All;
-                    }
-                    action(RejectedMobileBankingApplication)
-                    {
-                        Caption = 'Rejected Mobile Banking Applications';
-                        RunObject = page "Mobile Bk Appl. List-Rejected";
-                        ApplicationArea = All;
-                    }
-                }
-
-                action(MobileBankingMember)
-                {
-                    Caption = 'Mobile Banking Members';
-                    RunObject = page "Mobile Banking Members List";
-                    ApplicationArea = All;
-                }
-
-                action(MobileBankingUnregMember)
-                {
-                    Caption = 'Unregistered Mobile Banking Members Report';
-                    RunObject = report MobileUnregMemberList;
-                    ApplicationArea = All;
-                }
-
-                group(MobileBankingActivation)
-                {
-                    Caption = 'Mobile Banking Activation';
-                    action(NewMobileBankingActivation)
-                    {
-                        Caption = 'New Mobile Banking Activations';
-                        RunObject = page "Mobile Banking Activ. List-New";
-                        ApplicationArea = All;
-                    }
-                    action(PendingMobileBankingActivation)
-                    {
-                        Caption = 'Pending Mobile Banking Activations';
-                        RunObject = page "Mobile Bk Activ. List-Pending";
-                        ApplicationArea = All;
-                    }
-                    action(ApprovedMobileBankingActivation)
-                    {
-                        Caption = 'Approved Mobile Banking Activations';
-                        RunObject = page "Mobile Bk Activ. List-Approved";
-                        ApplicationArea = All;
-                    }
-                    action(RejectedMobileBankingActivation)
-                    {
-                        Caption = 'Rejected Mobile Banking Activations';
-                        RunObject = page "Mobile Bk Activ. List-Rejected";
-                        ApplicationArea = All;
-                    }
-                }
-                action(MobileBankingLedgerEntries)
-                {
-                    Caption = 'Mobile Banking Ledger Entries';
-                    RunObject = page "Mobile Banking Ledger Entries";
-                    ApplicationArea = All;
-                }
-            }
 
 
             group(FOSAPeriodicActivities)
@@ -556,18 +387,6 @@ page 56351 "Teller RoleCenter"
         }
         area(Processing)
         {
-            group(PeriodActivities)
-            {
-                Caption = 'Periodic Activities';
-
-                action(MatureFixedCallDeposit)
-                {
-                    Caption = 'Mature Fixed/Call Deposit';
-                    RunObject = report "Mature Fixed/Call Deposit";
-                    ApplicationArea = All;
-                }
-
-            }
             group(Reports)
             {
                 action(DailyCashAnalysis2)
@@ -576,12 +395,20 @@ page 56351 "Teller RoleCenter"
                     Image = "Report";
                     RunObject = Report "Daily Cash Analysis";
                     ApplicationArea = All;
+                    Visible = false;
                 }
-
             }
         }
         area(Creation)
         {
+            action(NewTellerTransaction)
+            {
+                Caption = 'New Teller Transaction';
+                Image = NewInvoice;
+                RunObject = Page "Teller Transaction Card";
+                RunPageMode = Create;
+                ApplicationArea = All;
+            }
             action(NewMemberApplication)
             {
                 Caption = 'New Member Application';
@@ -598,24 +425,9 @@ page 56351 "Teller RoleCenter"
                 RunPageMode = Create;
                 ApplicationArea = All;
             }
-            action(NewMobileBankingApplication)
-            {
-                Caption = 'New Mobile Banking Application';
-                Image = NewInvoice;
-                RunObject = Page "Mobile Banking Appl. Card";
-                RunPageMode = Create;
-                ApplicationArea = All;
-            }
-            action(NewMobileBankingActivation2)
-            {
-                Caption = 'New Mobile Banking Activation';
-                Image = NewInvoice;
-                RunObject = Page "Mobile Banking Activation";
-                RunPageMode = Create;
-                ApplicationArea = All;
-            }
 
         }
+
     }
 }
 // Creates a profile that uses the Role Center

@@ -93,12 +93,10 @@
                 }
                 field(Occupation; Rec.Occupation)
                 {
-                    ShowMandatory = true;
                     ApplicationArea = All;
                 }
                 field(County; Rec.County)
                 {
-                    ShowMandatory = true;
                     ApplicationArea = All;
                 }
                 field("Sub Category"; Rec."Sub Category")
@@ -107,6 +105,7 @@
                 }
                 field("Checkoff Company Code"; Rec."Checkoff Company Code")
                 {
+                    ShowMandatory = true;
                     ApplicationArea = All;
                 }
                 field("Checkoff Company Name"; Rec."Checkoff Company Name")

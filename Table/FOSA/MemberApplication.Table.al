@@ -640,6 +640,7 @@ table 50000 "Member Application"
                         NoSeriesManagement.AreRelated(MemberApplicationSetup."MA Individual Nos.", xRec."No. Series");
                         "No." := NoSeriesManagement.GetNextNo(MemberApplicationSetup."MA Individual Nos.");
                         "No. Series" := xRec."No. Series";
+                        "Age Classification" := "Age Classification"::Adult;
                     END;
                 END;
             Category::Group:
@@ -748,11 +749,12 @@ table 50000 "Member Application"
         CASE Category OF
             Category::Individual:
                 BEGIN
-                    //TESTFIELD(Surname);
                     TESTFIELD("First Name");
+                    TESTFIELD(Surname);
+                    TestField("Checkoff Company Code");
                     //TESTFIELD("Last Name");
-                    if "Age Classification" = "Age Classification"::Adult then
-                        TESTFIELD("National ID");
+                    TESTFIELD("National ID");
+
                     TESTFIELD("Date of Birth");
                     TESTFIELD("Age Classification");
                     //TESTFIELD("Global Dimension 1 Code");

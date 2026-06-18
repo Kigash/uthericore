@@ -61,6 +61,11 @@
                     Enabled = Rec."Is Cheque" or Rec."Is Bank Deposit";
                     ShowMandatory = Rec."Is Cheque" or Rec."Is Bank Deposit";
                 }
+                field("Transaction Charge"; Rec."Transaction Charge")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                }
             }
         }
 

@@ -20,14 +20,25 @@ table 50046 "Transaction Coinage Setup"
             var
 
             begin
-                "Line Amount" := Quantity * "Coinage Value";
 
             end;
 
         }
         field(4; "Coinage Code"; Code[20])
         {
-            Editable = false;
+            TableRelation = "Coinage Setup";
+            trigger OnValidate()
+            var
+                CoinageSetup: Record "Coinage Setup";
+            begin
+                TestField(Quantity);
+                CoinageSetup.Reset();
+                CoinageSetup.SetRange(Code, "Coinage Code");
+                if CoinageSetup.FindFirst() then begin
+                    "Coinage Value" := CoinageSetup."Value";
+                    "Line Amount" := Quantity * "Coinage Value";
+                end;
+            end;
         }
         field(5; "Coinage Value"; Decimal)
         {
@@ -59,8 +70,13 @@ table 50046 "Transaction Coinage Setup"
         myInt: Integer;
 
     trigger OnInsert()
+    var
+        TransactionCoinageSetup: Record "Transaction Coinage Setup";
     begin
-
+        TransactionCoinageSetup.Reset();
+        TransactionCoinageSetup.SetRange("Transaction No.", "Transaction No.");
+        if TransactionCoinageSetup.FindLast() then
+            "Line No." := TransactionCoinageSetup."Line No." + 1;
     end;
 
     trigger OnModify()
