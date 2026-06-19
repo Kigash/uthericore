@@ -22,7 +22,7 @@ codeunit 50004 "Tellering & Treasury"
             TransactionTpeCodeSetup.TestField("Principal Paid");
             TransactionTpeCodeSetup.TestField("Interest Paid");
             SourceCodeSetup.TestField(Teller);
-            TestField(Narration);
+            //TestField(Narration);
 
             UserSetup.Get("Teller User ID");
 
@@ -208,7 +208,7 @@ codeunit 50004 "Tellering & Treasury"
         end;
     end;
 
-    local procedure GetTransactionCharges(TransactionTypeCode: Code[20]; TransactionAmount: Decimal; var ChargeAmount: Decimal)
+    procedure GetTransactionCharges(TransactionTypeCode: Code[20]; TransactionAmount: Decimal; var ChargeAmount: Decimal)
     var
         TransactionCharge: Record "Transaction Charge";
         TellerTransType: Record "Transaction -Type";
@@ -221,7 +221,7 @@ codeunit 50004 "Tellering & Treasury"
                 if TellerTransType.Get(TransactionTypeCode) then begin
                     if (TellerTransType.Type = TellerTransType.Type::"Teller Cash Withdrawal") or (TellerTransType.Type = TellerTransType.Type::"Teller Cheque Withdrawal") then begin
                         if ((TransactionAmount >= TransactionCharge."Minimum Amount") and (TransactionAmount <= TransactionCharge."Maximum Amount")) then begin
-                            ChargeAmount += TransactionCharge."Settlement Amount  (SACCO)";
+                            ChargeAmount := TransactionCharge."Settlement Amount  (SACCO)";
                         end;
                     end;
                 end;

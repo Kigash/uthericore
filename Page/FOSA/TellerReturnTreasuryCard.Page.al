@@ -48,6 +48,10 @@
                         ApplicationArea = All;
                     }
                 }
+                field("Total Coinage Amount"; Rec."Total Coinage Amount")
+                {
+                    ApplicationArea = All;
+                }
                 field("Teller User ID"; Rec."Teller User ID")
                 {
                     ApplicationArea = All;
@@ -153,6 +157,16 @@
                 var
                     ApprovalsMgmt: Codeunit "Approvals Mgmt Ext";
                 begin
+                    Rec.CalcFields("Total Coinage Amount");
+                    if Rec."Transaction Type" = Rec."Transaction Type"::"Return To Treasury" then
+                        If Rec."Total Coinage Amount" <> Rec."Till Return Amount" then
+                            Error('Return amount must match total coinage amount');
+
+                    if Rec."Transaction Type" = Rec."Transaction Type"::"Receive From Treasury" then
+                        If Rec."Total Coinage Amount" <> Rec."Till Receive Amount" then
+                            Error('Receive amount must match total coinage amount');
+
+
                     IF ApprovalsMgmt.CheckTellerReturnTreasuryApprovalPossible(Rec) THEN begin
                         ApprovalsMgmt.OnSendTellerReturnTreasuryForApproval(Rec);
                         CurrPage.Close();

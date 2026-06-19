@@ -62,6 +62,7 @@
     begin
         SetActionVisible;
         CurrPage.Editable(false);
+        Rec.SetFilter("Created By", UserId);
     end;
 
     var

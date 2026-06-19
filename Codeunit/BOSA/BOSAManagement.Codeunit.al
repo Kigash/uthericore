@@ -27,7 +27,8 @@ codeunit 50010 "BOSA Management"
         LoanSelloffSetup: Record "Loan Selloff Setup";
         Customer: Record "Customer";
 
-        NoSeriesManagement: Codeunit "No. Series";SMTPSetup: Record "SMTP Mail Setup";
+        NoSeriesManagement: Codeunit "No. Series";
+        SMTPSetup: Record "SMTP Mail Setup";
         SMTPMail: Codeunit "SMTP Mail";
         Member: Record "Member";
         LoanProductType: Record "Loan Product Type";
@@ -135,7 +136,7 @@ codeunit 50010 "BOSA Management"
                 If LoanApplication."Loan Restructured" = true then
                     InterestAmount := 0
                 else
-                    InterestAmount := ApprovedLoanAmount * (LoanApplication."Interest Rate" / 100);
+                    InterestAmount := ApprovedLoanAmount * (LoanApplication."Interest Rate" / 12 / 100);
                 FOR i := 1 TO NoOfInstallments DO BEGIN
                     AddRepaymentSchedule(LoanApplication, NextRepaymentDate, ApprovedLoanAmount, PrincipalAmount, InterestAmount, i);
                     ApprovedLoanAmount -= PrincipalAmount;

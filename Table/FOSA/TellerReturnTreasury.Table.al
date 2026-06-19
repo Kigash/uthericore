@@ -97,6 +97,12 @@ table 50050 "Teller Return Treasury"
         {
 
         }
+        field(25; "Total Coinage Amount"; Decimal)
+        {
+            Editable = false;
+            FieldClass = FlowField;
+            CalcFormula = sum("Transaction Coinage Setup"."Line Amount" where("Transaction No." = field("No.")));
+        }
     }
 
     keys

@@ -61,4 +61,8 @@
             }
         }
     }
+    trigger OnOpenPage()
+    begin
+        Rec.SetFilter("Teller User ID", UserId);
+    end;
 }

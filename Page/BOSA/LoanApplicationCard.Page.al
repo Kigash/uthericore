@@ -636,6 +636,7 @@
                         ApprovalsMgmt.OnSendLoanApplicationForApproval(Rec);
                         BOSAManagement.SendNotification(RecRef);
                     end;
+                    CurrPage.Close();
                 end;
             }
             action(CancelApprovalRequest)
@@ -658,6 +659,7 @@
                 begin
                     ApprovalsMgmt.OnCancelLoanApplicationApprovalRequest(Rec);
                     WorkflowWebhookMgt.FindAndCancel(Rec.RECORDID);
+                    CurrPage.Close();
                 end;
             }
             action(Approve)
@@ -742,6 +744,7 @@
                     IF Rec.Status = Rec.Status::Approved then
                         Rec.Status := Rec.Status::New;
                     Rec.Modify();
+                    CurrPage.Close();
                 end;
             }
             action(Delegate)
@@ -792,6 +795,7 @@
                         BOSAManagement.PostLoan(Rec);
                         RecRef.GetTable(Rec);
                         BOSAManagement.SendNotification(RecRef);
+                        CurrPage.Close();
                         Exit;
                     end else
                         Exit;
@@ -812,6 +816,7 @@
                 begin
                     if Confirm(ReverseLoanConfirmMsg, true, Rec."No.") then
                         BOSAManagement.ReverseLoan(Rec);
+                    CurrPage.Close();
                     exit;
                 end;
             }

@@ -26,7 +26,7 @@ table 50043 "Teller Transaction Line"
                 Clear("Line Amount");
                 //ValidateTransactionHeader;
                 ValidateAccountType();
-                ValidateAccountNo();
+                //ValidateAccountNo();
                 IF "Account Type" = "Account Type"::"Savings/ shares" THEN BEGIN
                     IF Vendor.GET("Account No.") THEN begin
                         "Account Name" := Vendor.Name;
@@ -57,17 +57,22 @@ table 50043 "Teller Transaction Line"
             Editable = false;
 
         }
+
         field(5; "Line Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             trigger OnValidate()
             var
+                Tellering: Codeunit "Tellering & Treasury";
             begin
-                ClearAmounts();
-                ValidateAccountNo();
-                ValidateTotalAmount();
+                //ClearAmounts();
+                //ValidateAccountNo();
+                Clear("Transaction Charge");
+                //ValidateTotalAmount();
+                Tellering.GetTransactionCharges("Transaction Type", "Line Amount", "Transaction Charge");
             end;
         }
+
         field(7; "Account Type"; Option)
         {
             Caption = 'Account Type';
@@ -115,13 +120,28 @@ table 50043 "Teller Transaction Line"
             var
                 TransType: Record "Transaction -Type";
             begin
-                ClearAmounts();
+                //ClearAmounts();
+
+                Clear("Account No.");
+                Clear("Account Name");
+                Clear("Account Type");
+                Clear("Bank Acc No");
+                Clear("Is Bank Deposit");
+                Clear("Is Cheque");
+                Clear("Cheque No");
+                Clear("Transaction Charge");
+
+                Clear("Line Amount");
+                Clear("Debit Amount");
+                Clear("Credit Amount");
+
                 TellerUserSetup.Get(UserId);
                 TransactionType.Get("Transaction Type");
                 if TransactionType."Application Area" = TransactionType."Application Area"::Teller then begin
                     if TransactionType.Type = TransactionType.Type::"Teller Cash Withdrawal" then begin
                         if not TellerUserSetup."Withdrawal Allowed" then
                             Error(WithdrawalNotAllowedErr1);
+
                     end;
                     if TransactionType.Type = TransactionType.Type::"Teller Cash Deposit" then begin
                         if not TellerUserSetup."Deposit Allowed" then
