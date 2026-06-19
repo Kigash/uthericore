@@ -24,10 +24,13 @@ table 50170 "Teller Member Statistic"
             DataClassification = ToBeClassified;
 
         }
-        field(5; Amount; Decimal)
+        field(5; Balance; Decimal)
         {
             DataClassification = ToBeClassified;
-
+        }
+        field(6; "Withdrawable Amount"; Decimal)
+        {
+            DataClassification = ToBeClassified;
         }
     }
 

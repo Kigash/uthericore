@@ -768,6 +768,30 @@ table 50101 "Loan Application"
             DataClassification = CustomerContent;
             Caption = 'Schedule Corrected';
         }
+        field(142; "Outstanding Principal"; Decimal)
+        {
+            FieldClass = FlowField;
+            CalcFormula = Sum("Detailed Cust. Ledg. Entry".Amount WHERE("Customer No." = FIELD("No."), "Posting Date" = field("Date Filter"), "Entry Type" = filter("Initial Entry"), "Transaction Type Code" = filter('NEWLOAN|PPAID|CONT|" "')));
+            Editable = false;
+        }
+        field(143; "Outstanding Interest"; Decimal)
+        {
+            FieldClass = FlowField;
+            CalcFormula = Sum("Detailed Cust. Ledg. Entry".Amount WHERE("Customer No." = FIELD("No."), "Posting Date" = field("Date Filter"), "Entry Type" = filter("Initial Entry"), "Transaction Type Code" = filter('INTDUE|INTPAID')));
+            Editable = false;
+        }
+        field(144; "Outstanding Penalty"; Decimal)
+        {
+            FieldClass = FlowField;
+            CalcFormula = Sum("Detailed Cust. Ledg. Entry".Amount WHERE("Customer No." = FIELD("No."), "Posting Date" = field("Date Filter"), "Entry Type" = filter("Initial Entry"), "Transaction Type Code" = filter('PENDUE|PENPAID')));
+            Editable = false;
+        }
+        field(146; "Prepayment"; Decimal)
+        {
+            FieldClass = FlowField;
+            CalcFormula = Sum("Detailed Cust. Ledg. Entry".Amount WHERE("Customer No." = FIELD("No."), "Posting Date" = field("Date Filter"), "Entry Type" = filter("Initial Entry"), "Transaction Type Code" = filter('PREPAY')));
+            Editable = false;
+        }
     }
 
     keys

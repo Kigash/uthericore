@@ -87,6 +87,9 @@ report 51104 "Teller Transaction ReceiptN"
                 }
                 column(LAmount; LAmount)
                 { }
+                column(Desc; Desc)
+                {
+                }
                 trigger OnPreDataItem()
                 begin
                     TotalLAmount := 0;
@@ -102,6 +105,8 @@ report 51104 "Teller Transaction ReceiptN"
                         LAmount := "Debit Amount";
                         TotalLAmount += LAmount;
                     end;
+                    TransTypes.Get("Transaction Type");
+                    Desc := TransTypes."Description";
                 end;
             }
             trigger OnAfterGetRecord()
@@ -161,4 +166,6 @@ report 51104 "Teller Transaction ReceiptN"
         LAmount: Decimal;
         TotalLAmount: Decimal;
         PhoneNo: Code[100];
+        Desc: Text;
+        TransTypes: Record "Transaction -Type";
 }

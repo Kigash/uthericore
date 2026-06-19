@@ -42,6 +42,7 @@ codeunit 50004 "Tellering & Treasury"
             IF TellerTransactionLine.FindSet() THEN begin
                 repeat
                     TransactionType.Get(TellerTransactionLine."Transaction Type");
+                    //ChargeAmount[1] := TellerTransactionLine."Transaction Charge";
                     GetTransactionCharges(TransactionType.Code, TellerTransactionLine."Line Amount", ChargeAmount[1]);
                     case TransactionType.Type of
                         TransactionType.Type::"Teller Cash Deposit":

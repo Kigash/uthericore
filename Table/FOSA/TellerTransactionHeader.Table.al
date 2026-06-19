@@ -234,7 +234,7 @@ table 50042 "Teller Transaction Header"
             repeat
                 Customer.CalcFields(Balance, "Balance (LCY)");
                 if Customer.Balance > 0 then
-                    CreateTellerMemberStatistics(Customer.Name, Customer."Balance (LCY)");
+                    CreateTellerMemberStatistics(Customer.Name, Customer."Balance (LCY)", 0);
             until Customer.Next() = 0;
         end;
 
@@ -246,8 +246,11 @@ table 50042 "Teller Transaction Header"
                 Vendor.SetRange("Member No.", "Member No.");
                 Vendor.SetRange("Account Type", AccountType.Code);
                 if Vendor.FindFirst() then begin
-                    Vendor.CalcFields("Balance (LCY)");
-                    CreateTellerMemberStatistics(Vendor.Name, abs(Vendor."Balance (LCY)"));
+                    Vendor.CalcFields(Balance, "Withheld Sep10th 2024 Balance", "Deposits From Sep10th 2024 Balance");
+                    if AccountType."Allow Withdrawal" = true then
+                        CreateTellerMemberStatistics(Vendor.Name, Vendor."Balance", (Vendor.Balance - Vendor."Withheld Sep10th 2024 Balance" - AccountType."Minimum Balance"))
+                    else
+                        CreateTellerMemberStatistics(Vendor.Name, Vendor."Balance", 0);
                 end;
             until AccountType.Next() = 0
         end;
@@ -259,7 +262,7 @@ table 50042 "Teller Transaction Header"
         CreateTellerMemberStatistics('Service Charge', TellerTransactionLine."Line Amount")*/
     end;
 
-    local procedure CreateTellerMemberStatistics(Description: Text[50]; Amount: Decimal)
+    local procedure CreateTellerMemberStatistics(Description: Text[50]; Balance: Decimal; WithdrawdrawableAmount: Decimal)
     var
         TellerMemberStatistic2: Record "Teller Member Statistic";
         LineNo: Integer;
@@ -275,7 +278,8 @@ table 50042 "Teller Transaction Header"
         TellerMemberStatistic."Line No." := LineNo + 10000;
         TellerMemberStatistic."Member No." := "Member No.";
         TellerMemberStatistic.Description := Description;
-        TellerMemberStatistic.Amount := Amount;
+        TellerMemberStatistic.Balance := Balance;
+        TellerMemberStatistic."Withdrawable Amount" := WithdrawdrawableAmount;
         TellerMemberStatistic.Insert();
     end;
 

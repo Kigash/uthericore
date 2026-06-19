@@ -22,11 +22,11 @@ table 50043 "Teller Transaction Line"
             IF ("Account Type" = FILTER("G/L Account")) "G/L Account" WHERE("Account Category" = filter(Income));
             trigger OnValidate()
             begin
-                ClearAmounts();
+                //ClearAmounts();
                 Clear("Line Amount");
                 //ValidateTransactionHeader;
                 ValidateAccountType();
-                //ValidateAccountNo();
+                ValidateAccountNo();
                 IF "Account Type" = "Account Type"::"Savings/ shares" THEN BEGIN
                     IF Vendor.GET("Account No.") THEN begin
                         "Account Name" := Vendor.Name;
@@ -64,12 +64,18 @@ table 50043 "Teller Transaction Line"
             trigger OnValidate()
             var
                 Tellering: Codeunit "Tellering & Treasury";
+                TransType: Record "Transaction -Type";
             begin
                 //ClearAmounts();
-                //ValidateAccountNo();
                 Clear("Transaction Charge");
-                //ValidateTotalAmount();
                 Tellering.GetTransactionCharges("Transaction Type", "Line Amount", "Transaction Charge");
+                ValidateAccountNo();
+                TransType.GET("Transaction Type");
+                If (TransType.Type = TransType.Type::"Teller Cash Withdrawal") or (TransType.Type = TransType.Type::"Teller Cheque Withdrawal") then begin
+                    if ("Line Amount" + "Transaction Charge") > "Withdrawable Amount" then
+                        Error('Line Amount and Transaction Charge cannot be greater than Withdrawable Amount');
+                end;
+                ValidateTotalAmount();
             end;
         }
 
@@ -200,6 +206,10 @@ table 50043 "Teller Transaction Line"
             TableRelation = "Bank Account" Where("Account Type" = filter(0));
         }
         field(17; "Is Bank Deposit"; Boolean)
+        {
+
+        }
+        field(18; "Withdrawable Amount"; Decimal)
         {
 
         }
@@ -340,7 +350,9 @@ table 50043 "Teller Transaction Line"
                 begin
                     if "Account Type" = "Account Type"::"Savings/ shares" then begin
                         Vendor.get("Account No.");
+                        Vendor.CalcFields(Balance, "Withheld Sep10th 2024 Balance", "Deposits From Sep10th 2024 Balance");
                         AccountType.Get(Vendor."Account Type");
+                        "Withdrawable Amount" := (Vendor.Balance - Vendor."Withheld Sep10th 2024 Balance" - AccountType."Minimum Balance");
                         if not AccountType."Allow Withdrawal" then
                             Error(WithdrawalNotAllowedErr);
                         if "Line Amount" > AccountType."Maximum Withdrawal Amount" then
@@ -352,17 +364,20 @@ table 50043 "Teller Transaction Line"
                 begin
                     if "Account Type" = "Account Type"::"Savings/ shares" then begin
                         Vendor.get("Account No.");
+                        Vendor.CalcFields(Balance, "Withheld Sep10th 2024 Balance", "Deposits From Sep10th 2024 Balance");
                         AccountType.Get(Vendor."Account Type");
+                        "Withdrawable Amount" := (Vendor.Balance - Vendor."Withheld Sep10th 2024 Balance" - AccountType."Minimum Balance");
                         if not AccountType."Allow Withdrawal" then
                             Error(WithdrawalNotAllowedErr);
                         if "Line Amount" > AccountType."Maximum Withdrawal Amount" then
                             Error(WithdrawalExceededErr, FieldCaption("Line Amount"));
+
                     end;
                     "Debit Amount" := "Line Amount";
                 end;
         end;
 
-        TransactionCharge.Reset();
+        /*TransactionCharge.Reset();
         TransactionCharge.SetRange("Transaction Type Code", TransactionType.Code);
         if TransactionCharge.FindSet() then begin
             repeat
@@ -370,7 +385,7 @@ table 50043 "Teller Transaction Line"
                     "Transaction Charge" += TransactionCharge."Settlement Amount  (SACCO)";
                 end;
             until TransactionCharge.Next() = 0;
-        end;
+        end;*/
     end;
 
     procedure CalculateMemberStatistics()
@@ -424,7 +439,7 @@ table 50043 "Teller Transaction Line"
         TellerMemberStatistic."Line No." := LineNo + 10000;
         TellerMemberStatistic."Member No." := "Member No.";
         TellerMemberStatistic.Description := Description;
-        TellerMemberStatistic.Amount := Amount;
+        TellerMemberStatistic.Balance := Amount;
         TellerMemberStatistic.Insert();
     end;
 

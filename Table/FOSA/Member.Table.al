@@ -563,6 +563,11 @@ table 50006 Member
         { }
         field(133; "Old Member No"; Code[50])
         { }
+        field(146; "Dormancy Status"; Option)
+        {
+            OptionCaption = 'Active,Blocked,Dormant,Frozen,Closed';
+            OptionMembers = Active,Blocked,Dormant,Frozen,Closed;
+        }
     }
 
     keys
@@ -600,7 +605,8 @@ table 50006 Member
     end;
 
     var
-        NoSeriesManagement: Codeunit "No. Series";GlobalSetup: Record "Global Setup";
+        NoSeriesManagement: Codeunit "No. Series";
+        GlobalSetup: Record "Global Setup";
         MemberApplication: Record "Member Application";
         // CBSManagement: Codeunit "50000";
         RecRef: RecordRef;

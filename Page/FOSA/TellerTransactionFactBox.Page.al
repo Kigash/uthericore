@@ -18,17 +18,16 @@
                 Caption = '';
                 field(Description; Rec.Description)
                 {
-
                     ApplicationArea = All;
-
                 }
-                field(Amount; Rec.Amount)
+                field(Amount; Rec.Balance)
                 {
-
                     ApplicationArea = All;
-
                 }
-
+                field("Withdrawable Amount"; Rec."Withdrawable Amount")
+                {
+                    ApplicationArea = All;
+                }
             }
         }
     }

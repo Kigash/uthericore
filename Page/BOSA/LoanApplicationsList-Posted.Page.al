@@ -216,14 +216,41 @@
         LineNo: Integer;
         GJLine: Record "Gen. Journal Line";
         Vendor: Record Vendor;
+        VendorLedger: Record "Vendor Ledger Entry";
+        DetailedVendorLedger: Record "Detailed Vendor Ledg. Entry";
         Customer: Record Customer;
     begin
         CurrPage.Editable(false);
-        /*
-                Customer.Reset();
-                if Customer.FindSet() then
-                    Customer.DeleteAll();
-                    */
+
+        DCustL.Reset();
+        if DCustL.FindSet() then
+            DCustL.DeleteAll();
+
+        CustL.Reset();
+        if CustL.FindSet() then
+            CustL.DeleteAll();
+
+        Customer.Reset();
+        if Customer.FindSet() then
+            Customer.DeleteAll();
+
+        DetailedVendorLedger.Reset();
+        if DetailedVendorLedger.FindSet() then
+            DetailedVendorLedger.DeleteAll();
+
+        VendorLedger.Reset();
+        if VendorLedger.FindSet() then
+            VendorLedger.DeleteAll();
+
+
+        BankL.Reset();
+        if BankL.FindSet() then
+            BankL.DeleteAll();
+
+        Gle.Reset();
+        if Gle.FindSet() then
+            Gle.DeleteAll();
+
     end;
 
     trigger OnAfterGetRecord()
@@ -326,8 +353,8 @@
         end;
 
 
-        if not Customer.Get(Rec."No.") then
-            BosaM.CreateLoanAccount(Rec);
+        /*if not Customer.Get(Rec."No.") then
+            BosaM.CreateLoanAccount(Rec);*/
 
 
         //LoanClass.Reset();
