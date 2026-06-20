@@ -385,7 +385,39 @@
                         Vend: Record Vendor;
                         DVend: Record "Detailed Vendor Ledg. Entry";
                         FosaM: Codeunit "FOSA Management";
+                        DetailedVendorLedger: Record "Detailed Vendor Ledg. Entry";
+                        VendorLedger: Record "Vendor Ledger Entry";
+                        GLEntry: Record "G/L Entry";
                     begin
+
+                        /*Vend.Reset();
+                        if Vend.FindSet() then begin
+                            repeat
+                                VendorLedger.Reset();
+                                VendorLedger.SetRange("Vendor No.", Vend."No.");
+                                if VendorLedger.FindSet() then begin
+                                    repeat
+                                        DetailedVendorLedger.Reset();
+                                        DetailedVendorLedger.SetRange("Vendor Ledger Entry No.", VendorLedger."Entry No.");
+                                        if DetailedVendorLedger.FindSet() then
+                                            DetailedVendorLedger.DeleteAll();
+
+                                        GLEntry.Reset();
+                                        GLEntry.SetRange("Transaction No.", VendorLedger."Transaction No.");
+                                        if GLEntry.FindSet() then
+                                            GLEntry.DeleteAll();
+
+                                        VendorLedger.Delete();
+                                    until VendorLedger.Next = 0;
+                                end;
+
+                                Vend."Vendor Type" := Vend."Vendor Type"::Normal;
+                                Vend.Modify();
+
+                                Vend.Delete();
+                            until Vend.Next = 0;
+                        end;*/
+
                         Member.Reset();
                         if Member.FindSet() then begin
                             repeat

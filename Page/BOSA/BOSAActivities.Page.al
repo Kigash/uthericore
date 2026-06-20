@@ -230,6 +230,7 @@ page 50348 "BOSA Activities"
         ProvisioningPercent: Decimal;
         ExpBal: Decimal;
         LoanSched: Record "Loan Repayment Schedule";
+        LoanSched2: Record "Loan Repayment Schedule";
         LoanArrears: Decimal;
         TotalLoanAmount: Decimal;
         TotalPrincipalPaid: Decimal;
@@ -249,7 +250,7 @@ page 50348 "BOSA Activities"
         Loan.SetRange(Cleared, false);
         if Loan.FindSet() then begin
             repeat
-                Loan.CalcFields("Outstanding Principal");
+                Loan.CalcFields("Outstanding Balance");
                 ExpBal := 0;
                 LoanArrears := 0;
                 ArrearsAmount[1] := 0;
@@ -262,29 +263,54 @@ page 50348 "BOSA Activities"
                 NoofInstallmentInArrears := 0;
                 ClassificationDesc := '';
                 TotalLoanAmount := 0;
-                GlobalM.CalculateLoanArrearsAndOverpayment(Loan."No.", 0D, Today, ArrearsAmount[1], ArrearsAmount[2], ArrearsAmount[3], ArrearsAmount[4], OverpaymentAmount[1], OverpaymentAmount[2]);
-                LoanArrears := ArrearsAmount[1];
-                PrincipalArrears += ArrearsAmount[1];
-                InterestArrears += ArrearsAmount[2];
-                PenaltyArrears += ArrearsAmount[4];
-                TotalAmountDue += ArrearsAmount[1] + ArrearsAmount[2] + ArrearsAmount[4];
+                if Loan."Outstanding Balance" > 0 then begin
+                    GlobalM.CalculateLoanArrearsAndOverpayment(Loan."No.", 0D, Today, ArrearsAmount[1], ArrearsAmount[2], ArrearsAmount[3], ArrearsAmount[4], OverpaymentAmount[1], OverpaymentAmount[2]);
+                    Loan."Principal Arrears" := ArrearsAmount[1];
+                    Loan."Interest Arrears" := ArrearsAmount[2];
+                    Loan."Ledger Fee Arrears" := ArrearsAmount[3];
+                    Loan."Penalty Arrears" := ArrearsAmount[4];
+                    Loan."Principal Overpayment" := OverpaymentAmount[1];
+                    Loan."Interest Overpayment" := OverpaymentAmount[2];
+                    Loan."Total Overpayment" := OverpaymentAmount[1] + OverpaymentAmount[2];
+                    If Loan."Date of Completion" > Today then begin
+                        LoanSched.Reset();
+                        LoanSched.SetRange("Loan No.", Loan."No.");
+                        LoanSched.SetFilter("Repayment Date", '<=%1', Today);
+                        if LoanSched.FindLast() then begin
+                            LoanSched2.Reset();
+                            LoanSched2.SetRange("Loan No.", Loan."No.");
+                            LoanSched2.SetFilter("Repayment Date", '>%1', Today);
+                            if LoanSched2.FindFirst() then begin
+                                Loan."Expected Balance" := LoanSched2."Loan Amount" + LoanSched."Interest Installment";
+                            end;
+                        end else begin
+                            Loan."Expected Balance" := Loan."Approved Amount";
+                        end;
+                    end;
+                    ArrearsAmount[4] := ArrearsAmount[1] + ArrearsAmount[2];
 
-                If LoanArrears > 0 then
-                    LoanArrears := LoanArrears
-                else
-                    LoanArrears := 0;
-
-                BosaM.CalculateDaysAndInstallmentsInArrearsDefaulter(Loan."No.", LoanArrears, NoofDaysInArrears, NoofInstallmentInArrears, Today);
-                BosaM.GetClassificationClassDetails(NoofDaysInArrears, ClassificationCode, ClassificationDesc, ProvisioningPercent);
-                TotalArrears += LoanArrears;
-                Loan."Principal Arrears" := ArrearsAmount[1];
-                Loan."Interest Arrears" := ArrearsAmount[2];
-                Loan."Penalty Arrears" := ArrearsAmount[4];
-                Loan."Total Arrears" := TotalAmountDue;
-                Loan."Days In Arrears" := NoofDaysInArrears;
-                Loan."Installment In Arrears" := NoofInstallmentInArrears;
-                Loan.Classification := ClassificationDesc;
-                Loan.Modify();
+                    Loan."Total Arrears" := ArrearsAmount[4];
+                    //"Total Arrears" := ArrearsAmount[1] + ArrearsAmount[2] + ArrearsAmount[3] + ArrearsAmount[4];
+                    BosaM.CalculateDaysAndInstallmentsInArrearsDefaulter(Loan."No.", (ArrearsAmount[4]), NoofDaysInArrears, NoofInstallmentInArrears, Today);
+                    BosaM.GetClassificationClassDetails(NoofDaysInArrears, ClassificationCode, ClassificationDesc, ProvisioningPercent);
+                    Loan."Days In Arrears" := NoofDaysInArrears;
+                    Loan."Installment In Arrears" := NoofInstallmentInArrears;
+                    Loan."Classification" := ClassificationDesc;
+                    Loan.Modify();
+                end else begin
+                    GlobalM.CalculateLoanArrearsAndOverpayment(Loan."No.", 0D, Today, ArrearsAmount[1], ArrearsAmount[2], ArrearsAmount[3], ArrearsAmount[4], OverpaymentAmount[1], OverpaymentAmount[2]);
+                    Loan."Principal Arrears" := 0;
+                    Loan."Interest Arrears" := 0;
+                    Loan."Ledger Fee Arrears" := 0;
+                    Loan."Penalty Arrears" := 0;
+                    Loan."Total Arrears" := 0;
+                    Loan."Days In Arrears" := 0;
+                    Loan."Installment In Arrears" := 0;
+                    Loan."Classification" := '';
+                    Loan."Principal Overpayment" := OverpaymentAmount[1];
+                    Loan."Interest Overpayment" := OverpaymentAmount[2];
+                    Loan.Modify();
+                end;
 
                 case ClassificationDesc of
                     'PERFORMING':

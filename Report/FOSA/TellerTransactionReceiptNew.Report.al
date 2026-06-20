@@ -168,4 +168,5 @@ report 51104 "Teller Transaction ReceiptN"
         PhoneNo: Code[100];
         Desc: Text;
         TransTypes: Record "Transaction -Type";
+        Balance: Decimal;
 }

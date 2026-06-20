@@ -69,7 +69,7 @@ tableextension 50000 VendorExt extends Vendor
         field(50022; "Deposits From Sep10th 2024 Balance"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = - sum("Detailed Vendor Ledg. Entry".Amount where("Transaction Type Code" = filter('DEP2024'), "Vendor No." = field("No.")));
+            CalcFormula = - sum("Detailed Vendor Ledg. Entry".Amount where("Transaction Type Code" = filter(<> 'WITH2024'), "Vendor No." = field("No.")));
         }
     }
     fieldgroups

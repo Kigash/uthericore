@@ -139,7 +139,7 @@
                 PromotedCategory = Category4;
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                Visible = true;
+                Visible = false;
                 RunObject = codeunit "Interest Changes";
             }
             action("Loan Guarantors")
@@ -222,7 +222,7 @@
     begin
         CurrPage.Editable(false);
 
-        DCustL.Reset();
+        /*DCustL.Reset();
         if DCustL.FindSet() then
             DCustL.DeleteAll();
 
@@ -249,7 +249,7 @@
 
         Gle.Reset();
         if Gle.FindSet() then
-            Gle.DeleteAll();
+            Gle.DeleteAll();*/
 
     end;
 
@@ -265,6 +265,8 @@
         ClassificationDesc: Text;
         ProvisioningPercent: Decimal;
         Customer: Record Customer;
+
+        LoanSched: Record "Loan Repayment Schedule";
     Begin
         LClassCode := '';
         PhoneNo := '';
@@ -279,6 +281,14 @@
         NoofInstallmentInArrears := 0;
         ClassificationDesc := '';
         Rec."Expected Balance" := 0;
+        if LoanProd.Get(Rec."Loan Product Type") then
+            if Rec.Description = '' then
+                Rec.Description := LoanProd."Description";
+
+        LoanSched.Reset();
+        LoanSched.SetRange("Loan No.", Rec."No.");
+        If not LoanSched.FindSet() then
+            BosaM.CreateRepaymentSchedule(Rec."No.", Rec."Approved Amount");
         //If Rec."No." = '300103000000000101' then begin
 
         Rec.CalcFields("Outstanding Balance");
@@ -353,8 +363,8 @@
         end;
 
 
-        /*if not Customer.Get(Rec."No.") then
-            BosaM.CreateLoanAccount(Rec);*/
+        if not Customer.Get(Rec."No.") then
+            BosaM.CreateLoanAccount(Rec);
 
 
         //LoanClass.Reset();
