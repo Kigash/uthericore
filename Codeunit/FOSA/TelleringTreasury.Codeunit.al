@@ -117,6 +117,9 @@ codeunit 50004 "Tellering & Treasury"
                                     GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", 2, TellerTransactionLine."Account No.", TellerTransactionLine."Transaction Type" + 'Cheque No -' + TellerTransactionLine."Cheque No" + ' - Member No ' + TellerTransactionLine."Member No." + ' ' + Narration, -TellerTransactionLine."Line Amount", '', '', SourceCodeSetup.Teller, GetBranchCode(TellerTransactionLine."Member No."), BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
                                 end;
 
+                                GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", 2, TellerTransactionLine."Account No.", "No." + ' ' + TellerTransactionLine."Transaction Type" + '-Transaction Charges' + ' Member No- ' + TellerTransactionLine."Member No." + ' ' + Narration, TellerTransactionLine."Transaction Charge", '', '', SourceCodeSetup.Teller, GetBranchCode(TellerTransactionLine."Member No."), BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                                GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", TransactionType."Settlement Account Type", TransactionType."Settlement Account No.", "No." + ' ' + TellerTransactionLine."Transaction Type" + '-Transaction Charges' + ' Member No- ' + TellerTransactionLine."Member No." + ' ' + Narration, -TellerTransactionLine."Transaction Charge", '', '', SourceCodeSetup.Teller, UserSetup."Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+
                                 if TellerTransactionLine."Account Type" = TellerTransactionLine."Account Type"::Loans then begin
                                     LoanApplication.get(TellerTransactionLine."Account No.");
                                     OriginalPostingGroup := LoanApplication."Loan Product Type";
@@ -208,6 +211,45 @@ codeunit 50004 "Tellering & Treasury"
                 Message(GetLastErrorText);
         end;
     end;
+
+    procedure PostTellerTransactionCorrection(var TellerTransactionHeader: Record "Teller Transaction Header")
+    var
+        TellerTransactionLine: Record "Teller Transaction Line";
+        ArrearsAmount: array[4] of Decimal;
+        OverpaymentAmount: array[4] of Decimal;
+        InstallmentDue: array[4] of Decimal;
+        RemainingAmount: Decimal;
+        ChargeAmount: array[8] of Decimal;
+        AccountBalance: Decimal;
+    begin
+        WITH TellerTransactionHeader DO begin
+            TelleringSetup.Get();
+            SourceCodeSetup.Get();
+            TransactionTpeCodeSetup.Get();
+            TransactionTpeCodeSetup.TestField("Principal Paid");
+            TransactionTpeCodeSetup.TestField("Interest Paid");
+            SourceCodeSetup.TestField(Teller);
+            UserSetup.Get("Teller User ID");
+            JournalTemplateName := TelleringSetup."Teller Template Name";
+            JournalBatchName := TelleringSetup."Teller Batch Name";
+            // GlobalManagement.ClearJournal(JournalTemplateName, JournalBatchName);
+
+            TellerTransactionLine.Reset();
+            TellerTransactionLine.SetRange("Transaction No.", "No.");
+            IF TellerTransactionLine.FindSet() THEN begin
+                repeat
+                    TransactionType.Get(TellerTransactionLine."Transaction Type");
+                    if TransactionType.Type = TransactionType.Type::"Teller Cheque Deposit" then begin
+                        GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", 2, TellerTransactionLine."Account No.", "No." + ' ' + TellerTransactionLine."Transaction Type" + '-Transaction Charges' + ' Member No- ' + TellerTransactionLine."Member No." + ' ' + Narration, TellerTransactionLine."Transaction Charge", '', '', SourceCodeSetup.Teller, GetBranchCode(TellerTransactionLine."Member No."), BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                        GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", TransactionType."Settlement Account Type", TransactionType."Settlement Account No.", "No." + ' ' + TellerTransactionLine."Transaction Type" + '-Transaction Charges' + ' Member No- ' + TellerTransactionLine."Member No." + ' ' + Narration, -TellerTransactionLine."Transaction Charge", '', '', SourceCodeSetup.Teller, UserSetup."Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                    end;
+                until TellerTransactionLine.Next() = 0;
+            end;
+
+            // GlobalManagement.PostJournal(JournalTemplateName, JournalBatchName);
+        end;
+    end;
+
 
     procedure GetTransactionCharges(TransactionTypeCode: Code[20]; TransactionAmount: Decimal; var ChargeAmount: Decimal)
     var

@@ -41,63 +41,63 @@
                     end;
 
                 }
-                field("Charge Withholding Tax"; Rec."Charge Withholding Tax")
-                {
-                    ApplicationArea = All;
-                    trigger OnValidate()
-                    var
-                    begin
-                        Rec.Validate("W/Tax Amount");
+                /* field("Charge Withholding Tax"; Rec."Charge Withholding Tax")
+                 {
+                     ApplicationArea = All;
+                     trigger OnValidate()
+                     var
+                     begin
+                         Rec.Validate("W/Tax Amount");
 
-                    end;
-                }
-                field("W/Tax Amount"; Rec."W/Tax Amount")
-                {
-                    ApplicationArea = All;
-                    trigger OnValidate()
-                    var
-                    begin
-                        CurrPage.Update()
-                    end;
-                }
-                field("VAT Business Posting Group"; Rec."VAT Business Posting Group")
-                {
-                    ApplicationArea = All;
-                    trigger OnValidate()
-                    var
-                    begin
-                        Rec.Validate("VAT Amount");
+                     end;
+                 }
+                 field("W/Tax Amount"; Rec."W/Tax Amount")
+                 {
+                     ApplicationArea = All;
+                     trigger OnValidate()
+                     var
+                     begin
+                         CurrPage.Update()
+                     end;
+                 }
+                 field("VAT Business Posting Group"; Rec."VAT Business Posting Group")
+                 {
+                     ApplicationArea = All;
+                     trigger OnValidate()
+                     var
+                     begin
+                         Rec.Validate("VAT Amount");
 
-                    end;
-                }
-                field("VAT Product Posting Group"; Rec."VAT Product Posting Group")
-                {
-                    ApplicationArea = All;
-                    trigger OnValidate()
-                    var
-                    begin
-                        Rec.Validate("VAT Amount");
+                     end;
+                 }
+                 field("VAT Product Posting Group"; Rec."VAT Product Posting Group")
+                 {
+                     ApplicationArea = All;
+                     trigger OnValidate()
+                     var
+                     begin
+                         Rec.Validate("VAT Amount");
 
-                    end;
-                }
+                     end;
+                 }
 
-                field("VAT Amount"; Rec."VAT Amount")
-                {
-                    ApplicationArea = All;
-                    trigger OnValidate()
-                    var
-                    begin
-                        CurrPage.Update()
-                    end;
-                }
-                field("Applies to Doc Type"; Rec."Applies to Doc Type")
-                {
-                    ApplicationArea = All;
-                }
-                field("Applies to Doc. No"; Rec."Applies to Doc. No")
-                {
-                    ApplicationArea = All;
-                }
+                 field("VAT Amount"; Rec."VAT Amount")
+                 {
+                     ApplicationArea = All;
+                     trigger OnValidate()
+                     var
+                     begin
+                         CurrPage.Update()
+                     end;
+                 }
+                 field("Applies to Doc Type"; Rec."Applies to Doc Type")
+                 {
+                     ApplicationArea = All;
+                 }
+                 field("Applies to Doc. No"; Rec."Applies to Doc. No")
+                 {
+                     ApplicationArea = All;
+                 }*/
 
             }
         }

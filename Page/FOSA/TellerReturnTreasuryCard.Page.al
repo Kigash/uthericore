@@ -306,7 +306,10 @@
             IsVisibleApprove := false;
             IsVisibleDelegate := false;
             IsVisibleReject := false;
-            IsVisiblePost := true;
+            if Rec.Posted = false then
+                IsVisiblePost := true
+            else
+                IsVisiblePost := false;
         END;
         IF Rec.Status = Rec.Status::Rejected THEN BEGIN
             IsVisibleSendApprovalRequest := FALSE;

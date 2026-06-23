@@ -66,9 +66,6 @@
                 {
                     ApplicationArea = All;
                 }
-
-
-
                 field("Created By"; Rec."Created By")
                 {
                     ApplicationArea = All;
@@ -96,9 +93,7 @@
                 {
                     ApplicationArea = All;
                     Importance = Additional;
-
                 }
-
             }
 
             part("Payment Voucher Subform"; "Payment Voucher Subform")
@@ -107,7 +102,6 @@
                 SubPageLink = "Document No." = FIELD("No.");
                 UpdatePropagation = Both;
             }
-
         }
     }
 
@@ -181,7 +175,6 @@
                     PromotedIsBig = true;
                     PromotedOnly = true;
                     ToolTip = 'Request approval of the document.';
-
                     trigger OnAction();
                     var
                         ApprovalsMgmt: Codeunit "Approvals Mgmt Ext-Finance";
@@ -204,7 +197,6 @@
                     PromotedOnly = true;
                     Visible = false;
                     ToolTip = 'Cancel the approval request.';
-
                     trigger OnAction();
                     var
                         ApprovalsMgmt: Codeunit "Approvals Mgmt Ext-Finance";

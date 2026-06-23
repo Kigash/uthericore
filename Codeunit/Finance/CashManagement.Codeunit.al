@@ -20,7 +20,8 @@ codeunit 50039 "Cash Management"
         GenJournalBatch: Record "Gen. Journal Batch";
         CustLedgerEntry: Record "Cust. Ledger Entry";
         VendorLedgerEntry: Record "Vendor Ledger Entry";
-        NoSeriesMgt: Codeunit "No. Series";GlobalManagement: Codeunit "Global Management";
+        NoSeriesMgt: Codeunit "No. Series";
+        GlobalManagement: Codeunit "Global Management";
         JournalTemplateName: Code[20];
         JournalBatchName: Code[20];
         LoanProductType: Record "Loan Product Type";
@@ -319,7 +320,6 @@ codeunit 50039 "Cash Management"
 
             TestField("Bank Account No.");
             TestField(Description);
-            TestField("Payee Name");
             TestField("Payment Method");
             TestField(Amount);
 
@@ -351,17 +351,16 @@ codeunit 50039 "Cash Management"
                     LineNetAmount := PaymentLine."Line Amount" - PaymentLine."W/Tax Amount" - PaymentLine."VAT Amount";
                     GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Posting Date", PaymentLine."Account Type", PaymentLine."Account No.", Description, LineNetAmount, '', '', SourceCodeSetup."Payment Voucher", "Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', PaymentLine."Applies to Doc Type", PaymentLine."Applies to Doc. No");
 
-                    if PaymentLine."W/Tax Amount" <> 0 then begin
-                        GlobalSetup.TestField("Withholding Tax G/L Account");
-                        GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Posting Date", AccountTypeEnum::"G/L Account", GlobalSetup."Withholding Tax G/L Account", Description, PaymentLine."W/Tax Amount", '', '', SourceCodeSetup."Payment Voucher", "Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                /*if PaymentLine."W/Tax Amount" <> 0 then begin
+                    GlobalSetup.TestField("Withholding Tax G/L Account");
+                    GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Posting Date", AccountTypeEnum::"G/L Account", GlobalSetup."Withholding Tax G/L Account", Description, PaymentLine."W/Tax Amount", '', '', SourceCodeSetup."Payment Voucher", "Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
 
-                    end;
-                    if PaymentLine."VAT Amount" <> 0 then begin
-                        VATPostingSetup.get(PaymentLine."VAT Business Posting Group", PaymentLine."VAT Product Posting Group");
-                        VATPostingSetup.TestField("Purchase VAT Account");
-                        GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Posting Date", AccountTypeEnum::"G/L Account", VATPostingSetup."Purchase VAT Account", Description, PaymentLine."VAT Amount", '', '', SourceCodeSetup."Payment Voucher", "Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
-
-                    end;
+                end;
+                if PaymentLine."VAT Amount" <> 0 then begin
+                    VATPostingSetup.get(PaymentLine."VAT Business Posting Group", PaymentLine."VAT Product Posting Group");
+                    VATPostingSetup.TestField("Purchase VAT Account");
+                    GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Posting Date", AccountTypeEnum::"G/L Account", VATPostingSetup."Purchase VAT Account", Description, PaymentLine."VAT Amount", '', '', SourceCodeSetup."Payment Voucher", "Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                end;*/
                 until PaymentLine.Next() = 0;
             end;
 
