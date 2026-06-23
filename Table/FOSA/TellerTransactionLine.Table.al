@@ -147,17 +147,18 @@ table 50043 "Teller Transaction Line"
                     if TransactionType.Type = TransactionType.Type::"Teller Cash Withdrawal" then begin
                         if not TellerUserSetup."Withdrawal Allowed" then
                             Error(WithdrawalNotAllowedErr1);
-
                     end;
                     if TransactionType.Type = TransactionType.Type::"Teller Cash Deposit" then begin
                         if not TellerUserSetup."Deposit Allowed" then
                             Error(DepositNotAllowedErr1);
                     end;
                 end;
+
                 TellerTransactionHeader.Get("Transaction No.");
                 "Member No." := TellerTransactionHeader."Member No.";
                 "Member Name" := TellerTransactionHeader."Member Name";
                 Clear("Is Cheque");
+
                 if TransType.Get("Transaction Type") then begin
                     if (TransType.Type = TransType.Type::"Teller Cheque Deposit") or (TransType.Type = TransType.Type::"Teller Cheque Withdrawal") then begin
                         "Is Cheque" := true
@@ -212,6 +213,21 @@ table 50043 "Teller Transaction Line"
         field(18; "Withdrawable Amount"; Decimal)
         {
 
+        }
+        field(19; "Cheque Waiting Period"; Option)
+        {
+            OptionMembers = "More Than 3 Days","Less Than 3 Days";
+            trigger OnValidate()
+            begin
+                "Transaction Charge" := 0;
+
+                if "Cheque Waiting Period" = "Cheque Waiting Period"::"More Than 3 Days" then begin
+                    "Transaction Charge" := 150;
+                end else begin
+                    "Transaction Charge" := 300;
+                end;
+
+            end;
         }
     }
 

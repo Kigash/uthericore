@@ -106,6 +106,34 @@
                 SubPageLink = "Transaction No." = FIELD("No.");
                 UpdatePropagation = Both;
             }
+            part("Member Picture"; "Member Picture")
+            {
+                ApplicationArea = All;
+                SubPageLink = "No." = FIELD("Member No.");
+                Visible = true;
+                Editable = true;
+            }
+            part("Member Front ID"; "Member Front ID")
+            {
+                ApplicationArea = All;
+                SubPageLink = "No." = FIELD("Member No.");
+                Visible = true;
+                Editable = true;
+            }
+            part("Member Back ID"; "Member Back ID")
+            {
+                ApplicationArea = All;
+                SubPageLink = "No." = FIELD("Member No.");
+                Visible = true;
+                Editable = true;
+            }
+            part("Member Signature"; "Member Signature")
+            {
+                ApplicationArea = All;
+                SubPageLink = "No." = FIELD("Member No.");
+                Visible = true;
+                Editable = true;
+            }
         }
     }
 

@@ -389,41 +389,37 @@
                         VendorLedger: Record "Vendor Ledger Entry";
                         GLEntry: Record "G/L Entry";
                     begin
+                        /*
+                                                Vend.Reset();
+                                                Vend.SetRange("Account Type", '03');
+                                                if Vend.FindSet() then begin
+                                                    repeat
+                                                        VendorLedger.Reset();
+                                                        VendorLedger.SetRange("Vendor No.", Vend."No.");
+                                                        if VendorLedger.FindSet() then begin
+                                                            repeat
+                                                                DetailedVendorLedger.Reset();
+                                                                DetailedVendorLedger.SetRange("Vendor Ledger Entry No.", VendorLedger."Entry No.");
+                                                                if DetailedVendorLedger.FindSet() then
+                                                                    DetailedVendorLedger.DeleteAll();
 
-                        /*Vend.Reset();
-                        if Vend.FindSet() then begin
-                            repeat
-                                VendorLedger.Reset();
-                                VendorLedger.SetRange("Vendor No.", Vend."No.");
-                                if VendorLedger.FindSet() then begin
-                                    repeat
-                                        DetailedVendorLedger.Reset();
-                                        DetailedVendorLedger.SetRange("Vendor Ledger Entry No.", VendorLedger."Entry No.");
-                                        if DetailedVendorLedger.FindSet() then
-                                            DetailedVendorLedger.DeleteAll();
+                                                                GLEntry.Reset();
+                                                                GLEntry.SetRange("Transaction No.", VendorLedger."Transaction No.");
+                                                                if GLEntry.FindSet() then
+                                                                    GLEntry.DeleteAll();
 
-                                        GLEntry.Reset();
-                                        GLEntry.SetRange("Transaction No.", VendorLedger."Transaction No.");
-                                        if GLEntry.FindSet() then
-                                            GLEntry.DeleteAll();
-
-                                        VendorLedger.Delete();
-                                    until VendorLedger.Next = 0;
-                                end;
-
-                                Vend."Vendor Type" := Vend."Vendor Type"::Normal;
-                                Vend.Modify();
-
-                                Vend.Delete();
-                            until Vend.Next = 0;
-                        end;*/
-
-                        Member.Reset();
+                                                                VendorLedger.Delete();
+                                                            until VendorLedger.Next = 0;
+                                                        end;
+                                                    until Vend.Next = 0;
+                                                end;
+                        */
+                        /*Member.Reset();
                         if Member.FindSet() then begin
                             repeat
                                 FosaM.CreateDefaultAccount(Member);
                             until Member.Next = 0;
-                        end;
+                        end;*/
                         Message('Update complete');
                     end;
                 }

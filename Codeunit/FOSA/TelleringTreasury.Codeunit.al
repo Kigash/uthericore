@@ -225,6 +225,10 @@ codeunit 50004 "Tellering & Treasury"
                             ChargeAmount := TransactionCharge."Settlement Amount  (SACCO)";
                         end;
                     end;
+
+                    if TellerTransType.Type = TellerTransType.Type::"Teller Cheque Deposit" then begin
+                        ChargeAmount := TransactionCharge."Settlement Amount  (SACCO)";
+                    end;
                 end;
             until TransactionCharge.Next() = 0;
         end;

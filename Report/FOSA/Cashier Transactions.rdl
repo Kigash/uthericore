@@ -19,28 +19,28 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.79167in</Width>
+                  <Width>0.89844in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.84375in</Width>
+                  <Width>0.85547in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.94792in</Width>
+                  <Width>2.6315in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.85417in</Width>
+                  <Width>1.34506in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.9479in</Width>
+                  <Width>1.43879in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>1.49089in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>0.88672in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>1.99089in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -841,7 +841,7 @@
             <Top>0.87375in</Top>
             <Left>0.10292in</Left>
             <Height>0.60416in</Height>
-            <Width>7.38541in</Width>
+            <Width>11.53776in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -855,7 +855,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>CASHIER TRANSACTIONS</Value>
+                    <Value>CASHIER TRANSACTIONS REPORT</Value>
                     <Style>
                       <FontFamily>Segoe UI</FontFamily>
                       <FontWeight>Bold</FontWeight>
@@ -871,7 +871,7 @@
             <Top>0.14458in</Top>
             <Left>1.31125in</Left>
             <Height>0.28472in</Height>
-            <Width>4.17708in</Width>
+            <Width>8.33852in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -899,14 +899,16 @@
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
             <Top>0.5925in</Top>
-            <Left>4.49873in</Left>
+            <Left>7.27217in</Left>
             <Height>0.25347in</Height>
-            <Width>0.9896in</Width>
+            <Width>1.4909in</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -934,15 +936,15 @@
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Right</TextAlign>
+                  <TextAlign>Left</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
             <Top>0.5925in</Top>
-            <Left>3.3425in</Left>
+            <Left>5.83339in</Left>
             <Height>0.25347in</Height>
-            <Width>1.14583in</Width>
+            <Width>1.43879in</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
@@ -970,14 +972,16 @@
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
             <Top>1.47791in</Top>
-            <Left>4.49873in</Left>
+            <Left>7.27217in</Left>
             <Height>0.25347in</Height>
-            <Width>0.9896in</Width>
+            <Width>1.4909in</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -1005,15 +1009,15 @@
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Right</TextAlign>
+                  <TextAlign>Left</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
             <Top>1.47791in</Top>
-            <Left>3.3425in</Left>
+            <Left>5.83339in</Left>
             <Height>0.25347in</Height>
-            <Width>1.14583in</Width>
+            <Width>1.43879in</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -1026,11 +1030,18 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>1.85291in</Height>
+        <Height>4.70639cm</Height>
         <Style />
       </Body>
-      <Width>7.48833in</Width>
+      <Width>29.56733cm</Width>
       <Page>
+        <PageHeight>21cm</PageHeight>
+        <PageWidth>29.7cm</PageWidth>
+        <LeftMargin>0cm</LeftMargin>
+        <RightMargin>0cm</RightMargin>
+        <TopMargin>0cm</TopMargin>
+        <BottomMargin>0cm</BottomMargin>
+        <ColumnSpacing>1.27cm</ColumnSpacing>
         <Style />
       </Page>
     </ReportSection>
@@ -1072,7 +1083,7 @@ End Function
 </Code>
   <Language>=User!Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
   <DataSets>
     <DataSet Name="DataSet_Result">

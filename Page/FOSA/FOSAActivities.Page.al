@@ -120,6 +120,7 @@
             cuegroup(ChequeBookCueContainer)
             {
                 Caption = 'Cheque Books';
+                Visible = false;
                 //CuegroupLayout = Wide;
                 field("ChequeBook-New"; Rec."ChequeBook-New")
                 {

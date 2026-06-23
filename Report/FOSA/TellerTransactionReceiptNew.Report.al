@@ -55,6 +55,10 @@ report 51104 "Teller Transaction ReceiptN"
             { }
             column(Narration; Narration)
             { }
+            column(AccBalance; AccBalance)
+            { }
+            column(WDBalance; WDBalance)
+            { }
             dataitem("Teller Transaction Line"; "Teller Transaction Line")
             {
                 DataItemLink = "Transaction No." = field("No.");
@@ -113,9 +117,21 @@ report 51104 "Teller Transaction ReceiptN"
             var
                 myInt: Integer;
                 Memb: Record Member;
+                AccountTypeEnum: Enum "Gen. Journal Account Type";
+                AccountNo: Code[20];
+                Vendor: Record Vendor;
             begin
                 CalcFields("Total Line Amount");
+                AccBalance := 0;
+                WDBalance := 0;
+                AccountNo := '';
+                AccountNo := GlobalManagement.GetOrdinaryAccount("Member No.");
                 AmountInWords := GlobalManagement.GetAmountInWords("Total Line Amount");
+                Vendor.Get(AccountNo);
+                Vendor.CalcFields("Deposits From Sep10th 2024 Balance", "Withheld Sep10th 2024 Balance");
+                AccBalance := Vendor."Deposits From Sep10th 2024 Balance";
+                WDBalance := Vendor."Withheld Sep10th 2024 Balance";
+
                 Memb.Get("Member No.");
                 PhoneNo := Memb."Phone No.";
             end;
@@ -168,5 +184,6 @@ report 51104 "Teller Transaction ReceiptN"
         PhoneNo: Code[100];
         Desc: Text;
         TransTypes: Record "Transaction -Type";
-        Balance: Decimal;
+        AccBalance: Decimal;
+        WDBalance: Decimal;
 }

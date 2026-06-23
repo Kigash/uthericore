@@ -840,6 +840,8 @@ codeunit 50010 "BOSA Management"
                     END;
                 UNTIL LoanProductCharge.NEXT = 0;
             END;
+
+
             if RFee > 0 then
                 TotalCharges += RFee;
             /*if "Mode of Disbursement" = "Mode of Disbursement"::"Bank Account" then begin

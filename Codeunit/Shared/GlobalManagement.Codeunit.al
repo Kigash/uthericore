@@ -2298,7 +2298,7 @@ codeunit 50023 "Global Management"
         IPAddress: dotNet IPAddress;
     begin
         HName := Dns.GetHostName();
-        Clear(GetIPMac2); 
+        Clear(GetIPMac2);
         // GetIPMac2 := GetIPMac2.GetIPMac();
         // HIP := GetIPMac2.GetIP(HName);
         //HMac := GetIPMac2.GetMac();
@@ -2428,6 +2428,25 @@ codeunit 50023 "Global Management"
         Vendor.SetRange("Account Type", LoanApplicationSetup."Loan Overpayment (Account Type)");
         if Vendor.FindFirst() then
             exit(Vendor."No.");
+    end;
+
+    procedure GetOrdinaryAccount(MemberNo: Code[20]): Code[20]
+    var
+        AccountType: Record "Account Type";
+        LoanApplicationSetup: Record "Loan Application Setup";
+        Vendor: Record Vendor;
+    begin
+        AccountType.Reset();
+        AccountType.SetRange(Type, AccountType.Type::Savings);
+        AccountType.SetRange("Sub Type", AccountType."Sub Type"::Ordinary);
+        If AccountType.FindFirst() then begin
+            Vendor.Reset();
+            Vendor.SetRange("Member No.", MemberNo);
+            Vendor.SetRange("Account Type", AccountType.Code);
+            if Vendor.FindFirst() then
+                exit(Vendor."No.");
+        end else
+            exit('');
     end;
 
     var

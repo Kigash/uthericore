@@ -53,6 +53,13 @@
                     Enabled = Rec."Is Cheque";
                     ShowMandatory = Rec."Is Cheque";
                 }
+                field("Cheque Waiting Period"; Rec."Cheque Waiting Period")
+                {
+                    ApplicationArea = All;
+                    Editable = Rec."Is Cheque";
+                    Enabled = Rec."Is Cheque";
+                    ShowMandatory = Rec."Is Cheque";
+                }
                 // "Is Bank Deposit"
                 field("Bank Acc No"; Rec."Bank Acc No")
                 {

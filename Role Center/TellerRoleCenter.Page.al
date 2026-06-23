@@ -6,8 +6,14 @@ page 56351 "Teller RoleCenter"
     {
         area(RoleCenter)
         {
-            part(Part1; "Teller RoleCenter Headline")
+            part(Part1; "FOSA RoleCenter Headline")
             {
+                ApplicationArea = All;
+            }
+
+            part(Part2; "FOSA Activities")
+            {
+                Caption = 'FOSA';
                 ApplicationArea = All;
             }
         }

@@ -351,7 +351,7 @@
                 begin
                     TellerTransactionHeader.GET(Rec."No.");
                     TellerTransactionHeader.SETRECFILTER;
-                    Report.Run(50004, true, false, TellerTransactionHeader);
+                    Report.Run(51104, true, false, TellerTransactionHeader);
                 end;
             }
         }
