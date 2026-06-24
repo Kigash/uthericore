@@ -348,7 +348,7 @@ codeunit 50039 "Cash Management"
                     PaymentLine.TestField("Account No.");
                     PaymentLine.TestField(Description);
                     PaymentLine.TestField("Line Amount");
-                    LineNetAmount := PaymentLine."Line Amount" - PaymentLine."W/Tax Amount" - PaymentLine."VAT Amount";
+                    LineNetAmount := PaymentLine."Line Amount" /*- PaymentLine."W/Tax Amount" - PaymentLine."VAT Amount"*/;
                     GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Posting Date", PaymentLine."Account Type", PaymentLine."Account No.", Description, LineNetAmount, '', '', SourceCodeSetup."Payment Voucher", "Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', PaymentLine."Applies to Doc Type", PaymentLine."Applies to Doc. No");
 
                 /*if PaymentLine."W/Tax Amount" <> 0 then begin
@@ -649,6 +649,8 @@ codeunit 50039 "Cash Management"
             GLEntry.SetRange("Document No.", "No.");
             if GLEntry.FindSet() then begin
                 repeat
+                    ReversalEntry.SetHideWarningDialogs();
+                    ReversalEntry.SetHideDialog(true);
                     ReversalEntry.ReverseTransaction(GLEntry."Transaction No.");
                 until GLEntry.Next() = 0;
             end;

@@ -25,21 +25,27 @@
                 {
                     ApplicationArea = All;
                 }
-                field("Agent Code"; Rec."Agent Code")
+                field("Bank Account"; Rec."Bank Account")
                 {
                     ApplicationArea = All;
                 }
-                field("Agent Name"; Rec."Agent Name")
+                field("Charge Calculation Method"; Rec."Charge Calculation Method")
                 {
                     ApplicationArea = All;
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update();
+                    end;
                 }
-                field("Agency Account Balance"; Rec."Agency Account Balance")
+                field("Flat Charge Amount"; Rec."Flat Charge Amount")
                 {
                     ApplicationArea = All;
+                    Visible = Rec."Charge Calculation Method" = 0;
                 }
-                field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
+                field("Charge Percentage"; Rec."Charge Percentage")
                 {
                     ApplicationArea = All;
+                    Visible = Rec."Charge Calculation Method" = 1;
                 }
                 field("Payment Method"; Rec."Payment Method")
                 {
@@ -106,11 +112,21 @@
                     ApplicationArea = All;
                 }
             }
-            part(Page; "Payout Subform")
+            // Add the new part for Charge Ranges below
+            part(PayoutChargeRange; "Payout Charge Range")
             {
                 ApplicationArea = All;
                 SubPageLink = "Document No." = FIELD("No.");
+                Visible = Rec."Charge Calculation Method" = 2;
             }
+            // This is the existing part for Payout Lines
+            part(PayoutSubform; "Payout Subform")
+            {
+                SubPageLink = "Document No." = FIELD("No.");
+                ApplicationArea = All;
+            }
+
+
         }
         area(factboxes)
         {
@@ -349,4 +365,3 @@
             CurrPage.EDITABLE := FALSE;
     end;
 }
-

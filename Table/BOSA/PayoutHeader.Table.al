@@ -9,14 +9,6 @@ table 50120 "Payout Header"
         field(1; "No."; Code[20])
         {
             Editable = false;
-
-            trigger OnValidate()
-            begin
-                IF "No." = '' THEN BEGIN
-                    PayoutSetup.GET;
-                    "No." := NoSeriesManagement.GetNextNo(PayoutSetup."Payout Nos.", 0D, TRUE);
-                END;
-            end;
         }
         field(2; "Payout Type"; Code[20])
         {
@@ -45,7 +37,6 @@ table 50120 "Payout Header"
         field(8; "Agent Code"; Code[20])
         {
             TableRelation = "Remittance Agent Setup";
-            ;
 
             trigger OnValidate()
             begin
@@ -123,6 +114,32 @@ table 50120 "Payout Header"
             OptionCaption = 'New,Pending Approval,Approved,Rejected';
             OptionMembers = New,"Pending Approval",Approved,Rejected;
         }
+        field(26; "Bank Account"; Code[20])
+        {
+            DataClassification = CustomerContent;
+            TableRelation = "Bank Account";
+        }
+        field(27; "Charge Calculation Method"; Option)
+        {
+            DataClassification = CustomerContent;
+            OptionMembers = "Flat Amount","%",Range;
+        }
+        field(28; "Flat Charge Amount"; Decimal)
+        {
+            DataClassification = CustomerContent;
+        }
+        field(29; "Charge Percentage"; Decimal)
+        {
+            DataClassification = CustomerContent;
+        }
+        field(30; "Minimum Charge Amount"; Decimal)
+        {
+            DataClassification = CustomerContent;
+        }
+        field(31; "Maximum Charge Amount"; Decimal)
+        {
+            DataClassification = CustomerContent;
+        }
     }
 
     keys
@@ -138,21 +155,30 @@ table 50120 "Payout Header"
 
     trigger OnInsert()
     begin
-        IF "No." = '' THEN BEGIN
-            PayoutSetup.GET;
-            "No." := NoSeriesManagement.GetNextNo(PayoutSetup."Payout Nos.", 0D, TRUE);
-            "Created By" := USERID;
-            "Created Date" := TODAY;
-            "Created Time" := TIME;
-        END;
+        if "No." = '' then begin
+            PayoutSetup.Get();
+            PayoutSetup.TestField("Payout Nos.");
+            "No." := NoSeriesManagement.GetNextNo(PayoutSetup."Payout Nos.", Today(), true);
+        end;
+        "Created By" := UserId;
+        "Created Date" := Today;
+        "Created Time" := Time;
     end;
+
+    /*trigger OnValidate()
+            begin
+                IF "No." = '' THEN BEGIN
+                    PayoutSetup.GET;
+                    "No." := NoSeriesManagement.GetNextNo(PayoutSetup."Payout Nos.", 0D, TRUE);
+                END;
+            end;*/
 
     var
         PayoutSetup: Record "Payout Setup";
-        NoSeriesManagement: Codeunit "No. Series";DimensionValue: Record "Dimension Value";
+        NoSeriesManagement: Codeunit "No. Series";
+        DimensionValue: Record "Dimension Value";
         TransactionTypes: Record "Transaction -Type";
         PayoutType: Record "Payout Type";
         RemittanceAgentSetup: Record "Remittance Agent Setup";
         Vendor: Record Vendor;
 }
-

@@ -728,16 +728,22 @@ codeunit 50010 "BOSA Management"
             TransactionTypeCodeSetup.TestField("Processing Fee");
             TransactionTypeCodeSetup.TestField("Insurance Fee");
             TransactionTypeCodeSetup.TestField("Refinancing Fee");
-            If Member.Get("Member No.") then begin
-                "Sub Category" := Member."Sub Category";
-                LoanApplication.Modify();
-            end;
+            Member.Get("Member No.");
+            "Sub Category" := Member."Sub Category";
+            LoanApplication.Modify();
 
             CALCFIELDS("Total Refinanced Amount");
             IF "Approved Amount" = 0 then
                 "Approved Amount" := "Requested Amount";
 
             DisbursalAmount := "Approved Amount" - "Total Refinanced Amount";
+
+            if "Disbursal Account No." = '' then begin
+                "Disbursal Account No." := FosaM.GetOrdinaryMemberAccount(Member);
+                LoanApplication.Validate("Disbursal Account No.");
+                LoanApplication.Modify();
+            end;
+
             TotalCharges := 0;
             CreateLoanAccount(LoanApplication);
             GlobalManagement.ClearJournal(LoanApplicationSetup."Loan Disbursal Template Name", LoanApplicationSetup."Loan Disbursal Batch Name");
@@ -2970,7 +2976,7 @@ codeunit 50010 "BOSA Management"
             GlobalManagement.ClearJournal(PayoutSetup."Payout Template Name", PayoutSetup."Payout Batch Name");
 
             GlobalManagement.CreateJournal(PayoutSetup."Payout Template Name", PayoutSetup."Payout Batch Name", "No.", "No.", TODAY, RemittanceAgentSetup."Account Type",
-                          RemittanceAgentSetup."Account No.", Description + Text013, "Total Payout Amount", '', '', SourceCodeSetup.Payout, "Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                          PayoutHeader."Bank Account", Description + Text013, "Total Payout Amount", '', '', SourceCodeSetup.Payout, "Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
 
             PayoutLine.RESET;
             PayoutLine.SETRANGE("Document No.", "No.");

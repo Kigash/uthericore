@@ -292,10 +292,6 @@ codeunit 50001 "FOSA Management"
             AccountType.RESET;
             AccountType.SETRANGE(Type, AccountType.Type::Savings);
             AccountType.SETRANGE("Sub Type", AccountType."Sub Type"::Ordinary);
-            if Category = Category::Individual then
-                AccountType.SetRange("Applies to Member Category", AccountType."Applies to Member Category"::Individual);
-            if Category = Category::Group then
-                AccountType.SetRange("Applies to Member Category", AccountType."Applies to Member Category"::Group);
             If AccountType.FindFirst() then begin
                 Vendor.Reset();
                 Vendor.SetRange("Account Type", AccountType.Code);

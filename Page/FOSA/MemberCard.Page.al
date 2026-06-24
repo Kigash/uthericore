@@ -558,7 +558,7 @@
                 Visible = IsVisibleGroup;
                 ApplicationArea = All;
                 RunObject = page "Group Member";
-                RunPageLink = "Application No." = field("No.");
+                RunPageLink = "Application No." = field("Application No.");
 
             }
             action("Group Trustees")
@@ -571,7 +571,7 @@
                 Visible = IsVisibleGroup;
                 ApplicationArea = All;
                 RunObject = page "Group Trustee";
-                RunPageLink = "Application No." = field("No.");
+                RunPageLink = "Application No." = field("Application No.");
 
             }
             action("Company Signatories")

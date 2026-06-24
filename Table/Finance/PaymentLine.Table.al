@@ -23,7 +23,8 @@ table 50332 "Payment Line"
         }
         field(5; "Account No."; Code[20])
         {
-            TableRelation = IF ("Account Type" = filter("G/L Account")) "G/L Account"
+            TableRelation = IF ("Account Type" = filter("G/L Account")) "G/L Account" where("Account Type" = const(Posting),
+                                                                                          Blocked = const(false))
             ELSE
             IF ("Account Type" = filter(Customer)) Customer
             ELSE

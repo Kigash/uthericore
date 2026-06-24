@@ -45,10 +45,21 @@ xmlport 50001 "Import Payout File"
                             ChargeAmount[1] := 0;
                             ChargeAmount[2] := 0;
                             ChargeAmount[3] := 0;
-                            IF PayoutSetup."Charges Calculation Method" = PayoutSetup."Charges Calculation Method"::"Flat Amount" THEN
-                                ChargeAmount[1] := PayoutSetup."Flat Amount";
-                            IF PayoutSetup."Charges Calculation Method" = PayoutSetup."Charges Calculation Method"::"%" THEN
-                                ChargeAmount[1] := (PayoutSetup."Charge %" / 100) * "Gross Amount";
+
+                            IF PayoutHeader."Charge Calculation Method" = PayoutHeader."Charge Calculation Method"::"Flat Amount" THEN
+                                ChargeAmount[1] := PayoutHeader."Flat Charge Amount";
+
+                            IF PayoutHeader."Charge Calculation Method" = PayoutHeader."Charge Calculation Method"::"%" THEN
+                                ChargeAmount[1] := (PayoutHeader."Charge Percentage" / 100) * "Gross Amount";
+
+                            IF PayoutHeader."Charge Calculation Method" = PayoutHeader."Charge Calculation Method"::Range THEN BEGIN
+                                ChargeAmount[1] := (PayoutHeader."Charge Percentage" / 100) * "Gross Amount";
+                                IF ChargeAmount[1] < PayoutHeader."Minimum Charge Amount" THEN
+                                    ChargeAmount[1] := PayoutHeader."Minimum Charge Amount";
+                                IF ChargeAmount[1] > PayoutHeader."Maximum Charge Amount" THEN
+                                    ChargeAmount[1] := PayoutHeader."Maximum Charge Amount";
+                            END;
+
                             IF PayoutSetup."Charge Excise Duty" THEN
                                 ChargeAmount[2] := (GlobalSetup."Excise Duty %" / 100) * ChargeAmount[1]
                             ELSE
@@ -111,6 +122,7 @@ xmlport 50001 "Import Payout File"
         Member: Record "Member";
         PayoutSetup: Record "Payout Setup";
         GlobalSetup: Record "Global Setup";
+        PayoutHeader: Record "Payout Header";
 
     procedure SetPayoutNo(var PayoutNo: Code[20])
     begin
@@ -142,4 +154,3 @@ xmlport 50001 "Import Payout File"
             EXIT(Vendor."No.");
     end;
 }
-

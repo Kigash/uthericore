@@ -11,24 +11,24 @@ page 50346 "BOSA RoleCenter"
             {
                 ApplicationArea = All;
             }
-
-            part(Part2; "BOSA Activities")
-            {
-                Caption = 'BOSA';
-                ApplicationArea = All;
-            }
-            part(Control1; "Branch Analysis-LProduct Chart")
-            {
-                AccessByPermission = TableData "Sales Shipment Header" = R;
-                ApplicationArea = Basic, Suite;
-                Visible = false;
-            }
-            part(Control2; "Classification Summary Chart")
-            {
-                AccessByPermission = TableData "Sales Shipment Header" = R;
-                ApplicationArea = Basic, Suite;
-                Visible = false;
-            }
+            /*
+                        part(Part2; "BOSA Activities")
+                        {
+                            Caption = 'BOSA';
+                            ApplicationArea = All;
+                        }
+                        part(Control1; "Branch Analysis-LProduct Chart")
+                        {
+                            AccessByPermission = TableData "Sales Shipment Header" = R;
+                            ApplicationArea = Basic, Suite;
+                            Visible = false;
+                        }
+                        part(Control2; "Classification Summary Chart")
+                        {
+                            AccessByPermission = TableData "Sales Shipment Header" = R;
+                            ApplicationArea = Basic, Suite;
+                            Visible = false;
+                        }*/
 
         }
     }

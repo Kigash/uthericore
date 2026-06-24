@@ -247,7 +247,6 @@ page 50348 "BOSA Activities"
 
         Loan.Reset();
         Loan.SetRange(Posted, true);
-        Loan.SetRange(Cleared, false);
         if Loan.FindSet() then begin
             repeat
                 Loan.CalcFields("Outstanding Balance");
@@ -314,21 +313,21 @@ page 50348 "BOSA Activities"
 
                 case ClassificationDesc of
                     'PERFORMING':
-                        PERFORMING += Loan."Outstanding Principal";
+                        PERFORMING += Loan."Outstanding Balance";
                     'WATCH':
-                        WATCH += Loan."Outstanding Principal";
+                        WATCH += Loan."Outstanding Balance";
                     'DOUBTFUL':
-                        DOUBTFUL += Loan."Outstanding Principal";
+                        DOUBTFUL += Loan."Outstanding Balance";
                     'SUBSTANDARD':
-                        SUBSTANDARD += Loan."Outstanding Principal";
+                        SUBSTANDARD += Loan."Outstanding Balance";
                     'LOSS':
-                        LOSS += Loan."Outstanding Principal";
+                        LOSS += Loan."Outstanding Balance";
                 end;
 
                 if (ClassificationDesc = 'WATCH') or (ClassificationDesc = 'DOUBTFUL') or (ClassificationDesc = 'SUBSTANDARD') or (ClassificationDesc = 'LOSS') then
-                    TotalPAR += Loan."Outstanding Principal";
+                    TotalPAR += Loan."Outstanding Balance";
 
-                TotalOLB += Loan."Outstanding Principal";
+                TotalOLB += Loan."Outstanding Balance";
 
                 if Loan."Date of Completion" <= Today then
                     ExpiredLoansArrears += LoanArrears

@@ -1,7 +1,7 @@
-page 56351 "Teller RoleCenter"
+page 50179 "Teller & Payments RoleCenter"
 {
     PageType = RoleCenter;
-    Caption = 'Teller Role Center';
+    Caption = 'Teller & Payments Role Center';
     layout
     {
         area(RoleCenter)
@@ -10,7 +10,6 @@ page 56351 "Teller RoleCenter"
             {
                 ApplicationArea = All;
             }
-
             /*part(Part2; "FOSA Activities")
             {
                 Caption = 'FOSA';
@@ -141,8 +140,103 @@ page 56351 "Teller RoleCenter"
                         ApplicationArea = All;
                     }
                 }
-
             }
+            group(PaymentVouchers)
+            {
+                Caption = 'Payments Vouchers';
+
+                action(NewPaymentVoucherlist)
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'New Payment Vouchers';
+                    Image = CashFlow;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = Page "Payment Voucher List-New";
+                    ToolTip = 'Reconcile all Payment Voucher List stage';
+                }
+                action(PendingPaymentVoucherlist)
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Pending Payment Vouchers';
+                    Image = CashFlow;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    Visible = false;
+                    RunObject = Page "Payment Voucher List-Pending";
+                    ToolTip = 'Reconcile all Payment Voucher List stage';
+                }
+                action(ApprovedPaymentVoucherlist)
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Approved Payment Vouchers';
+                    Image = CashFlow;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    Visible = false;
+                    RunObject = Page "Payment Voucher List-Approved";
+                    ToolTip = 'Reconcile all Approved Payment Voucher stage';
+
+                }
+                action(PostedPaymentVoucherlist)
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Posted Payment Vouchers';
+                    Image = CashFlow;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = Page "Payment Voucher List-Posted";
+                    ToolTip = 'Reconcile all Posted Payment Voucher stage';
+                }
+            }
+            group(PettyCashVouchers)
+            {
+                Caption = 'PettyCash Vouchers';
+                Visible = false;
+
+                action(NewPettyCashVoucherlist)
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'New PettyCash Vouchers';
+                    Image = CashFlow;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = Page "PettyCash Voucher List-New";
+                    ToolTip = 'Reconcile all PettyCash Voucher List stage';
+                }
+                action(PendingPettyCashVoucherlist)
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Pending PettyCash Vouchers';
+                    Image = CashFlow;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = Page "PettyCash Voucher List-Pending";
+                    ToolTip = 'Reconcile all PettyCash Voucher List stage';
+                }
+                action(ApprovedPettyCashVoucherlist)
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Approved PettyCash Vouchers';
+                    Image = CashFlow;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = Page "PettyCash V. List-Approved";
+                    ToolTip = 'Reconcile all Approved PettyCash Voucher stage';
+
+                }
+                action(PostedPettyCashVoucherlist)
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Posted PettyCash Vouchers';
+                    Image = CashFlow;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = Page "PettyCash V. List-Posted";
+                    ToolTip = 'Reconcile all Posted PettyCash Voucher stage';
+                }
+            }
+
 
 
             group(MemberApplication)
@@ -437,10 +531,10 @@ page 56351 "Teller RoleCenter"
     }
 }
 // Creates a profile that uses the Role Center
-profile TellerProfile
+profile TellerPaymentsProfile
 {
-    ProfileDescription = 'Teller Profile';
-    RoleCenter = "Teller RoleCenter";
-    Caption = 'Teller';
+    ProfileDescription = 'Teller & Payments Profile';
+    RoleCenter = "Teller & Payments RoleCenter";
+    Caption = 'Teller & Payments';
 }
 

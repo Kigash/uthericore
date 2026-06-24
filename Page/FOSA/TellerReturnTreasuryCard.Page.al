@@ -258,8 +258,6 @@
                 Scope = Repeater;
                 ToolTip = 'Delegate the approval to a substitute approver.';
                 Visible = IsVisibleDelegate;
-
-
                 trigger OnAction()
                 var
                     ApprovalEntry: Record "Approval Entry";
@@ -272,6 +270,28 @@
                         ApprovalsMgmt.DelegateApprovalRequests(ApprovalEntry);
                     END;
                     CurrPage.CLOSE;
+                end;
+            }
+
+            action("Print")
+            {
+                ApplicationArea = All;
+                Caption = 'Print';
+                Image = Print;
+                Promoted = true;
+                PromotedCategory = Category4;
+                PromotedIsBig = true;
+                PromotedOnly = true;
+                ToolTip = 'Print the document.';
+
+                trigger OnAction()
+                var
+                    TellerReturnTreasury: Record "Teller Return Treasury";
+                begin
+                    TellerReturnTreasury.Reset();
+                    TellerReturnTreasury.SetRange("No.", Rec."No.");
+                    if TellerReturnTreasury.FindFirst() then
+                        Report.Run(57794, true, false, TellerReturnTreasury);
                 end;
             }
         }

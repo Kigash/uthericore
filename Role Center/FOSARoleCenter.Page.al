@@ -4,30 +4,30 @@ page 50351 "FOSA RoleCenter"
     Caption = 'FOSA Role Center';
     layout
     {
-        area(RoleCenter)
-        {
+        /*        area(RoleCenter)
+                {
 
-            part(Part1; "FOSA RoleCenter Headline")
-            {
-                ApplicationArea = All;
-            }
+                    part(Part1; "FOSA RoleCenter Headline")
+                    {
+                        ApplicationArea = All;
+                    }
 
-            part(Part2; "FOSA Activities")
-            {
-                Caption = 'FOSA';
-                ApplicationArea = All;
-            }
-            part(Control1; "Membership Analysis Chart")
-            {
-                Visible = false;
-                ApplicationArea = Basic, Suite;
-            }
-            part(Control2; "Branch Analysis-Acc Type Chart")
-            {
-                Visible = false;
-                ApplicationArea = Basic, Suite;
-            }
-        }
+                    part(Part2; "FOSA Activities")
+                    {
+                        Caption = 'FOSA';
+                        ApplicationArea = All;
+                    }
+                    part(Control1; "Membership Analysis Chart")
+                    {
+                        Visible = false;
+                        ApplicationArea = Basic, Suite;
+                    }
+                    part(Control2; "Branch Analysis-Acc Type Chart")
+                    {
+                        Visible = false;
+                        ApplicationArea = Basic, Suite;
+                    }
+                }*/
     }
 
     actions

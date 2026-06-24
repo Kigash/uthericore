@@ -372,6 +372,176 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
                 RunObject = Page "Requests to Approve";
                 ApplicationArea = All;
             }
+            group(UserManagement)
+            {
+                Caption = 'User Management';
+                action(UserList)
+                {
+                    Caption = 'User List';
+                    RunObject = Page "Users";
+                    ApplicationArea = All;
+                }
+                action(UserSettings)
+                {
+                    Caption = 'User Role Settings';
+                    RunObject = Page "User Settings";
+                    ApplicationArea = All;
+                }
+                action(UserSetup)
+                {
+                    Caption = 'User Setup';
+                    RunObject = Page "User Setup";
+                    ApplicationArea = All;
+                }
+                action(TellerUserSetup)
+                {
+                    Caption = 'Teller User Setup';
+                    RunObject = Page "Teller User Setup";
+                    ApplicationArea = All;
+                }
+            }
+            group(Workflows)
+            {
+                Caption = 'Workflows';
+                action(WorkflowsList)
+                {
+                    Caption = 'Workflows List';
+                    RunObject = Page "Workflows";
+                    ApplicationArea = All;
+                }
+                action(WorkflowUserGroup)
+                {
+                    Caption = 'Workflow User Group';
+                    RunObject = Page "Workflow User Groups";
+                    ApplicationArea = All;
+                }
+            }
+            group(Teller)
+            {
+                Visible = true;
+                group("Teller Transaction")
+                {
+                    action("New Teller Transactions")
+                    {
+                        RunObject = Page "Teller Transactions List-New";
+                        ApplicationArea = All;
+                    }
+                    action("Posted Teller Transactions")
+                    {
+                        RunObject = Page "Teller Transactions-Posted";
+                        ApplicationArea = All;
+                    }
+                    action("Cashier Transactions Report")
+                    {
+                        Caption = 'Cashier Reports';
+                        RunObject = report "Cashier Transactions Report";
+                        ApplicationArea = All;
+                    }
+                }
+                group("Teller Close Till")
+                {
+                    Caption = 'Open/Close Till';
+                    Visible = true;
+                    action("New Teller Close Till")
+                    {
+                        Caption = 'Teller Open/Close Till List-New';
+                        RunObject = Page "Teller Close Till List-New";
+                        ApplicationArea = All;
+                    }
+                    action("Pending Teller Close Till")
+                    {
+                        Caption = 'Teller Open/Close Till List-Pending';
+                        RunObject = Page "Teller Close Till-Pending";
+                        ApplicationArea = All;
+                    }
+                    action("Approved Teller Close Till")
+                    {
+                        Caption = 'Teller Open/Close Till List-Approved';
+                        RunObject = Page "Teller Close Till-Approved";
+                        ApplicationArea = All;
+                    }
+                    action("Rejected Teller Close Till")
+                    {
+                        Caption = 'Teller Open/Close Till List-Rejected';
+                        RunObject = Page "Teller Close Till-Rejected";
+                        ApplicationArea = All;
+                    }
+                }
+                group("InterTeller Transfer")
+                {
+                    action("New InterTeller Transfers")
+                    {
+                        RunObject = Page "InterTeller Transfers-New";
+                        ApplicationArea = All;
+                    }
+                    action("Pending InterTeller Transfers")
+                    {
+                        RunObject = Page "InterTeller Transfers-Pending";
+                        ApplicationArea = All;
+                    }
+                    action("Approved InterTeller Transfers")
+                    {
+                        RunObject = Page "InterTeller Transfers-Approved";
+                        ApplicationArea = All;
+                    }
+                    action("Rejected InterTeller Transfers")
+                    {
+                        RunObject = Page "InterTeller Transfers-Rejected";
+                        ApplicationArea = All;
+                    }
+                    action("Posted InterTeller Transfers")
+                    {
+                        RunObject = Page "InterTeller Transfers-Approved";
+                        ApplicationArea = All;
+                    }
+                }
+                action(TransactionTypes)
+                {
+                    Caption = 'Teller Transaction Types';
+                    RunObject = Page "Transaction Types";
+                    ApplicationArea = All;
+                }
+            }
+
+            group(Treasury)
+            {
+                Visible = true;
+                group("Return To Treasury")
+                {
+                    Caption = 'Teller Receive From/Return To Treasury';
+                    action("New Return To Treasury")
+                    {
+                        Caption = 'New Receive From/Return To Treasury';
+                        RunObject = Page "Teller Return Treasury-New";
+                        ApplicationArea = All;
+                    }
+                    action("Pending Return To Treasury")
+                    {
+                        Caption = 'Pending Receive From/Return To Treasury';
+                        RunObject = Page "Teller Return Treasury-Pending";
+                        ApplicationArea = All;
+                    }
+                    action("Approved Return To Treasury")
+                    {
+                        Caption = 'Approved Receive From/Return To Treasury';
+                        RunObject = Page "Teller Ret. Treasury-Approved";
+                        ApplicationArea = All;
+                    }
+                    action("Rejected Return To Treasury")
+                    {
+                        Caption = 'Rejected Receive From/Return To Treasury';
+                        RunObject = Page "Teller Ret. Treasury-Rejected";
+                        ApplicationArea = All;
+                    }
+                    action("Posted Return To Treasury")
+                    {
+                        Caption = 'Posted Receive From/Return To Treasury';
+                        RunObject = Page "Teller Ret. Treasury-Posted";
+                        ApplicationArea = All;
+                    }
+                }
+
+            }
             group(Members)
             {
                 Caption = 'Sacco Members';
@@ -404,6 +574,56 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
                     Caption = 'Board';
                     RunObject = Page MemberListBoard;
                     ApplicationArea = All;
+                }
+            }
+            group(LoanApplication)
+            {
+                Caption = 'Loan Application';
+
+                action("New Loan Application")
+                {
+                    RunObject = Page "Loan Application List-New";
+                    ApplicationArea = All;
+                }
+                action("Loans Pending Appraisal")
+                {
+                    RunObject = Page "Loan Appl. List-Pending Apprsl";
+                    ApplicationArea = All;
+                }
+                action("Loans Pending Disbursal")
+                {
+                    RunObject = Page "Loan Appl. List-Pending Dbsl";
+                    ApplicationArea = All;
+                }
+                action("Rejected Loans")
+                {
+                    RunObject = Page "Loans Appl. List-Rejected";
+                    ApplicationArea = All;
+                }
+                action("Posted Loans")
+                {
+                    RunObject = Page "Loan Applications List-Posted";
+                    ApplicationArea = All;
+                }
+            }
+
+            group(LoanClassification)
+            {
+                Caption = 'Loan Classification';
+                action("Classification Entries")
+                {
+                    ApplicationArea = All;
+                    RunObject = page "Loan Classification Entries";
+                }
+                action("Generate Classification")
+                {
+                    ApplicationArea = All;
+                    RunObject = report "Generate Loan Classification";
+                }
+                action("Loan Classification Setup")
+                {
+                    ApplicationArea = All;
+                    RunObject = page "Classification Setup";
                 }
             }
             group(MobileBanking)
@@ -607,6 +827,7 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
             group(SavingsWithManagement)
             {
                 Caption = 'Savings Withdrawal';
+                Visible = false;
                 action("New Member Savings Withdrawal")
                 {
                     ApplicationArea = All;
@@ -666,6 +887,331 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
                     {
                         ApplicationArea = All;
                         RunObject = page "Member Achive List-Posted";
+
+                    }
+                }
+            }
+        }
+        addafter("Chart of Accounts")
+        {
+            group(CBSSetUps)
+            {
+                Caption = 'Core Banking Setups';
+                group(GlobalSetup)
+                {
+                    Caption = 'Global Setup';
+                    action("Global Setup")
+                    {
+                        ApplicationArea = All;
+                        RunObject = page "Global Setup";
+                    }
+                }
+                group(FinanceSetups)
+                {
+                    Caption = 'Finance Setups';
+                    group(DividendsSetup)
+                    {
+                        Caption = 'Dividends Setup';
+                        action("Dividends Setup")
+                        {
+                            ApplicationArea = All;
+                            RunObject = page "Dividend Setup";
+                        }
+                        action("Dividend Loan Products")
+                        {
+                            ApplicationArea = All;
+                            RunObject = page "Dividend Loan Products";
+                        }
+                    }
+                    group(FTSetup)
+                    {
+                        Caption = 'Fund Transfer Setup';
+                        action("Fund Transfer Setup")
+                        {
+                            ApplicationArea = All;
+                            RunObject = page "Fund Transfer Setup";
+                        }
+                    }
+                    group(CashMSetup)
+                    {
+                        Caption = 'Cash Management Setup';
+                        action(CashMgtsetup)
+                        {
+                            ApplicationArea = Basic, Suite;
+                            Caption = 'Cash Management Setup';
+                            Image = CashFlowSetup;
+                            RunObject = Page "Cash Management Setup";
+                            ToolTip = 'Set up All Parameters for Cash Management Module';
+                        }
+                        group("Custom Banks Setup")
+                        {
+                            action(Banks)
+                            {
+                                ApplicationArea = Basic, Suite;
+                                Image = Bank;
+                                RunObject = Page Banks;
+                            }
+                            action("Bank Branchces")
+                            {
+                                ApplicationArea = Basic, Suite;
+                                Image = Bank;
+                                RunObject = Page "Banks Branch";
+                            }
+                        }
+                    }
+                }
+                group(BosaSetups)
+                {
+                    Caption = 'BOSA Setups';
+                    group(LASetup)
+                    {
+                        Caption = 'Loan Setup';
+                        action("Loan Application Setup")
+                        {
+                            ApplicationArea = All;
+                            RunObject = page "Loan Application Setup";
+                        }
+                        action("Loan Charges Setup")
+                        {
+                            ApplicationArea = All;
+                            RunObject = page "Loan Charge Setup";
+                        }
+                        action("Loan Securities Register")
+                        {
+                            ApplicationArea = All;
+                            RunObject = page "Securiy Register";
+                        }
+                        group("Sectoral Setup")
+                        {
+                            action("Economic Sectors")
+                            {
+                                ApplicationArea = All;
+                                RunObject = page "Economic Sectors";
+                            }
+                            action("Economic Sector Categories")
+                            {
+                                ApplicationArea = All;
+                                RunObject = page "Economic Sector Categories";
+                            }
+                            action("Economic Sector Sub-Categories")
+                            {
+                                ApplicationArea = All;
+                                RunObject = page "Economic Sector Sub-Categories";
+                            }
+                        }
+                        group(LSSetup)
+                        {
+                            Caption = 'Loan Rescheduling Setup';
+                            action("Loan Rescheduling Setup")
+                            {
+                                ApplicationArea = All;
+                                RunObject = page "Loan Rescheduling Setup";
+                            }
+                        }
+                        group(LSRSetup)
+                        {
+                            Caption = 'Loan Restructuring Setup';
+                            action("Loan Restructuring Setup")
+                            {
+                                ApplicationArea = All;
+                                RunObject = page "Loan Restructuring Setup";
+                            }
+                        }
+                        group(LNSetup)
+                        {
+                            Caption = 'Loan Notification Setup';
+                            action("Loan Notification Setup")
+                            {
+                                ApplicationArea = All;
+                                RunObject = page "Loan Notification Setup";
+                            }
+                        }
+                        group(GuarantorSubstitutionSetup)
+                        {
+                            Caption = 'Guarantor Substitution Setup';
+                            action("Guarantor Substitution Setup")
+                            {
+                                ApplicationArea = All;
+                                RunObject = page "Guarantor Substitution Setup";
+                            }
+                        }
+                        group(LoanDefaulterSetup)
+                        {
+                            Caption = 'Loan Defaulter Setup';
+                            action("Loan Defaulter Setup")
+                            {
+                                ApplicationArea = All;
+                                RunObject = page "Loan Defaulter Setup";
+                            }
+                        }
+                        group(LoanPTSetup)
+                        {
+                            Caption = 'Loan Product Types Setup';
+                            action("Loan Product Types")
+                            {
+                                ApplicationArea = All;
+                                RunObject = page "Loan Product Type List";
+                            }
+                        }
+                        group(ReportSetup)
+                        {
+                            Caption = 'Sasra Reports Mapping Setup';
+                            action(SasraSetup)
+                            {
+                                ApplicationArea = All;
+                                Caption = 'Setup';
+                                Image = Setup;
+                                RunObject = page "Sasra Reports Mapping Setup";
+
+                            }
+                        }
+                        group(LWSetup)
+                        {
+                            Caption = 'Loan Writeoff Setup';
+                            action("Loan Writeoff Setup")
+                            {
+                                ApplicationArea = All;
+                                RunObject = page "Loan Writeoff Setup";
+                            }
+                        }
+                    }
+                    group(ExitSetup)
+                    {
+                        Caption = 'Exit Setup';
+                        action("Exit Fees")
+                        {
+                            ApplicationArea = All;
+                            RunObject = page "Exit Fees";
+                        }
+                        action("Exit Setup")
+                        {
+                            ApplicationArea = All;
+                            RunObject = page "Exit Setup";
+                        }
+                    }
+                    group(BulkSMSSetup)
+                    {
+                        Caption = 'Bulk SMS Setup';
+                        action("Bulk SMS Setup")
+                        {
+                            ApplicationArea = All;
+                            RunObject = page "Bulk SMS Setup";
+                        }
+                    }
+                    group(SourceCodesList)
+                    {
+                        Caption = 'Source Codes List';
+                        action("Source Codes")
+                        {
+                            ApplicationArea = All;
+                            RunObject = page "Source Code List";
+                        }
+                    }
+                    group(SourceCodesSetup)
+                    {
+                        Caption = 'Source Codes Setup';
+                        action("Source Code Setup")
+                        {
+                            ApplicationArea = All;
+                            RunObject = page "Source Code Setup";
+                        }
+                    }
+                }
+                group(FosaSetups)
+                {
+                    Caption = 'FOSA Setups';
+                    group(MemberApplicationSetup)
+                    {
+                        Caption = 'Member Application Setup';
+                        action("Member Application Setup")
+                        {
+                            RunObject = Page "Member Application Setup";
+                            ApplicationArea = All;
+                        }
+                    }
+
+                    group(AccountOpeningSetup)
+                    {
+                        Caption = 'Account Opening Setup';
+                        action("Account Opening Setup")
+                        {
+                            RunObject = Page "Account Opening Setup";
+                            ApplicationArea = All;
+                        }
+                    }
+
+                    group(MemberActivationSetup)
+                    {
+                        Caption = 'Member Activation Setup';
+                        action("Member Activation Setup")
+                        {
+                            RunObject = Page "Member Activation Setup";
+                            ApplicationArea = All;
+                        }
+                    }
+                    group(TellerSetup)
+                    {
+                        Caption = 'Teller Setup';
+                        action("Teller User Setup")
+                        {
+                            RunObject = Page "Teller User Setup";
+                            ApplicationArea = All;
+                        }
+                        action("Coinage Setup")
+                        {
+                            RunObject = Page "Coinage Setup";
+                            ApplicationArea = All;
+                        }
+                        action("Tellering Setup")
+                        {
+                            RunObject = Page "Tellering Setup";
+                            ApplicationArea = All;
+                        }
+                    }
+                    group(TreasurySetup)
+                    {
+                        Caption = 'Treasury Setup';
+
+                        action("Treasury Setup")
+                        {
+                            RunObject = Page "Treasury Setup";
+                            ApplicationArea = All;
+                        }
+                    }
+                    group(Setup)
+                    {
+                        action("Account Types")
+                        {
+                            ApplicationArea = All;
+                            RunObject = Page "Account Type List";
+
+                        }
+                        action("Transaction Types")
+                        {
+                            ApplicationArea = All;
+                            RunObject = Page "Transaction Types List";
+
+                        }
+                        action("Member Categories")
+                        {
+                            ApplicationArea = All;
+                            RunObject = Page "Member Categories";
+
+                        }
+                        action(FOSAAgencies)
+                        {
+                            Caption = 'Agencies';
+                            ApplicationArea = All;
+                            RunObject = page "Remittance Agent Setup";
+
+                        }
+                        action(AuditLogSetup)
+                        {
+                            Caption = 'Audit Log Setup';
+                            ApplicationArea = All;
+                            RunObject = Page "Audit Log Table Setup";
+
+                        }
 
                     }
                 }
@@ -810,6 +1356,30 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
                     ToolTip = 'Reconcile all Posted Payment Voucher stage';
                 }
             }
+            group(Payout)
+            {
+                Caption = 'Payout Processing';
+                action(NewPayoutList)
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'New Payout List';
+                    Image = CashFlow;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = Page "Payout List-New";
+                    ToolTip = 'New Payout List stage';
+                }
+                action(PostedPayoutList)
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Posted Payout List';
+                    Image = CashFlow;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = Page "Payout List-Posted";
+                    ToolTip = 'Posted Payout List stage';
+                }
+            }
             group(PettyCashVouchers)
             {
                 Caption = 'PettyCash Vouchers';
@@ -860,6 +1430,7 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
             group(ReceiptVouchers)
             {
                 Caption = 'Receipt Vouchers';
+                //Visible = false;
                 action(NewReceiptVoucher)
                 {
                     ApplicationArea = Basic, Suite;
@@ -869,7 +1440,6 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
                     PromotedCategory = Process;
                     RunObject = Page "Receipt Voucher List-New";
                     ToolTip = 'Reconcile all Receipt Voucher List stage';
-
                 }
                 action(PostedReceiptVoucher)
                 {
@@ -880,12 +1450,12 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
                     PromotedCategory = Process;
                     RunObject = Page "Receipt Voucher List-Posted";
                     ToolTip = 'Reconcile all Posted Receipt Voucher List stage';
-
                 }
             }
             group(CheckoffReceiptVouchers)
             {
                 Caption = 'Checkoff Receipt Vouchers';
+                Visible = false;
                 action(NewCheckoffReceiptVoucher)
                 {
                     ApplicationArea = Basic, Suite;
@@ -895,7 +1465,6 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
                     PromotedCategory = Process;
                     RunObject = Page "Checkoff Rct. Voucher List-New";
                     ToolTip = 'Reconcile all Checkoff Receipt Voucher List stage';
-
                 }
                 action(PostedCheckoffReceiptVoucher)
                 {
@@ -906,7 +1475,6 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
                     PromotedCategory = Process;
                     RunObject = Page "Checkoff Rcpt V. List-Posted";
                     ToolTip = 'Reconcile all Posted Checkoff Receipt Voucher List stage';
-
                 }
             }
             group(Checkoff)

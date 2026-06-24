@@ -1752,12 +1752,6 @@ End Function
         <Field Name="National_ID">
           <DataField>National_ID</DataField>
         </Field>
-        <Field Name="Picture">
-          <DataField>Picture</DataField>
-        </Field>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-        </Field>
         <Field Name="No_Vendor">
           <DataField>No_Vendor</DataField>
         </Field>

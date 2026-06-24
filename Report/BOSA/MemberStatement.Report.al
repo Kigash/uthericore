@@ -31,12 +31,6 @@ report 50082 "Member Statement"
             column(National_ID; "National ID")
             {
             }
-            column(Picture; CompanyInfo.Picture)
-            {
-            }
-            column(Name; CompanyInfo.Name)
-            {
-            }
             dataitem(DataItem7; Vendor)
             {
                 DataItemLink = "Member No." = FIELD("No.");

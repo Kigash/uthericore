@@ -15,6 +15,7 @@ page 50349 "FOSA RoleCenter Headline"
                     Page.Run(390);
                 end;
             }
+            /*
             field(Headline1; StrSubstNo(text001, Member.Count))
             {
                 ApplicationArea = All;
@@ -33,6 +34,7 @@ page 50349 "FOSA RoleCenter Headline"
                     Page.Run(50149);
                 end;
             }
+            */
         }
     }
     local procedure IssuedChequeBooksCount(): Integer
