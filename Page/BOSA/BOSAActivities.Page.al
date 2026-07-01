@@ -295,7 +295,7 @@ page 50348 "BOSA Activities"
                     Loan."Days In Arrears" := NoofDaysInArrears;
                     Loan."Installment In Arrears" := NoofInstallmentInArrears;
                     Loan."Classification" := ClassificationDesc;
-                    Loan.Modify();
+                    //Loan.Modify();
                 end else begin
                     GlobalM.CalculateLoanArrearsAndOverpayment(Loan."No.", 0D, Today, ArrearsAmount[1], ArrearsAmount[2], ArrearsAmount[3], ArrearsAmount[4], OverpaymentAmount[1], OverpaymentAmount[2]);
                     Loan."Principal Arrears" := 0;
@@ -308,7 +308,7 @@ page 50348 "BOSA Activities"
                     Loan."Classification" := '';
                     Loan."Principal Overpayment" := OverpaymentAmount[1];
                     Loan."Interest Overpayment" := OverpaymentAmount[2];
-                    Loan.Modify();
+                    //Loan.Modify();
                 end;
 
                 case ClassificationDesc of

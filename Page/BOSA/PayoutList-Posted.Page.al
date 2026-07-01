@@ -10,6 +10,10 @@
                             Posted = FILTER(true));
     UsageCategory = History;
     ApplicationArea = All;
+    Editable = false;
+    InsertAllowed = false;
+    DeleteAllowed = false;
+    ModifyAllowed = false;
 
     layout
     {
@@ -26,14 +30,6 @@
                     ApplicationArea = All;
                 }
                 field(Description; Rec.Description)
-                {
-                    ApplicationArea = All;
-                }
-                field("Agent Code"; Rec."Agent Code")
-                {
-                    ApplicationArea = All;
-                }
-                field("Agent Name"; Rec."Agent Name")
                 {
                     ApplicationArea = All;
                 }

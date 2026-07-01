@@ -122,7 +122,7 @@ table 50120 "Payout Header"
         field(27; "Charge Calculation Method"; Option)
         {
             DataClassification = CustomerContent;
-            OptionMembers = "Flat Amount","%",Range;
+            OptionMembers = "Flat Amount","Percentage",Range;
         }
         field(28; "Flat Charge Amount"; Decimal)
         {
@@ -163,6 +163,18 @@ table 50120 "Payout Header"
         "Created By" := UserId;
         "Created Date" := Today;
         "Created Time" := Time;
+    end;
+
+    trigger OnModify()
+    begin
+        if Posted = true then
+            Error('You cannot modify a posted payout');
+    end;
+
+    trigger OnDelete()
+    begin
+        if Posted = true then
+            Error('You cannot delete a posted payout');
     end;
 
     /*trigger OnValidate()

@@ -31,6 +31,7 @@ xmlport 50001 "Import Payout File"
                 trigger OnAfterInsertRecord()
                 var
                     ChargeAmount: array[4] of Decimal;
+                    PayoutChargeRange: Record "Payout Charge Range";
                 begin
 
                     i += 1;
@@ -38,7 +39,7 @@ xmlport 50001 "Import Payout File"
                     IF i > 1 THEN BEGIN
                         WITH PayoutLine DO BEGIN
                             "Document No." := DocumentNo;
-                            "Line No." := GetLastLineNo(DocumentNo) + 10000;
+                            "Line No." := GetLastLineNo(DocumentNo) + 1;
                             VALIDATE("Member No.", MemberNo);
                             VALIDATE("Account No.", GetAccountNo(MemberNo, PayoutSetup."FOSA Account Type"));
                             EVALUATE("Gross Amount", Amount);
@@ -49,29 +50,22 @@ xmlport 50001 "Import Payout File"
                             IF PayoutHeader."Charge Calculation Method" = PayoutHeader."Charge Calculation Method"::"Flat Amount" THEN
                                 ChargeAmount[1] := PayoutHeader."Flat Charge Amount";
 
-                            IF PayoutHeader."Charge Calculation Method" = PayoutHeader."Charge Calculation Method"::"%" THEN
+                            IF PayoutHeader."Charge Calculation Method" = PayoutHeader."Charge Calculation Method"::"Percentage" THEN
                                 ChargeAmount[1] := (PayoutHeader."Charge Percentage" / 100) * "Gross Amount";
 
                             IF PayoutHeader."Charge Calculation Method" = PayoutHeader."Charge Calculation Method"::Range THEN BEGIN
-                                ChargeAmount[1] := (PayoutHeader."Charge Percentage" / 100) * "Gross Amount";
-                                IF ChargeAmount[1] < PayoutHeader."Minimum Charge Amount" THEN
-                                    ChargeAmount[1] := PayoutHeader."Minimum Charge Amount";
-                                IF ChargeAmount[1] > PayoutHeader."Maximum Charge Amount" THEN
-                                    ChargeAmount[1] := PayoutHeader."Maximum Charge Amount";
+                                PayoutChargeRange.RESET;
+                                PayoutChargeRange.SetRange("Document No.", PayoutHeader."No.");
+                                if PayoutChargeRange.FindSet() then begin
+                                    repeat
+                                        if ("Gross Amount" >= PayoutChargeRange."Minimum Amount") and ("Gross Amount" <= PayoutChargeRange."Maximum Amount") then begin
+                                            ChargeAmount[1] := PayoutChargeRange."Charge Amount";
+                                        end;
+                                    until PayoutChargeRange.Next() = 0;
+                                end;
                             END;
-
-                            IF PayoutSetup."Charge Excise Duty" THEN
-                                ChargeAmount[2] := (GlobalSetup."Excise Duty %" / 100) * ChargeAmount[1]
-                            ELSE
-                                ChargeAmount[2] := 0;
-                            IF PayoutSetup."Charge Witholding Tax" THEN
-                                ChargeAmount[3] := (GlobalSetup."Withholding Tax %" / 100) * ChargeAmount[1]
-                            ELSE
-                                ChargeAmount[3] := 0;
                             "Charge Amount" := ChargeAmount[1];
-                            "Excise Duty Amount" := ChargeAmount[2];
-                            "Withholding Tax Amount" := ChargeAmount[3];
-                            "Net Amount" := "Gross Amount" - (ChargeAmount[1] + ChargeAmount[2] + ChargeAmount[3]);
+                            "Net Amount" := "Gross Amount" - ChargeAmount[1];
                             IF "Net Amount" > 0 THEN
                                 "Net Amount" := "Net Amount"
                             ELSE

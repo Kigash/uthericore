@@ -45,6 +45,20 @@ report 50014 "Cashier Transactions Report"
                 column(User_ID; "User ID")
                 {
                 }
+                trigger OnAfterGetRecord()
+                begin
+                    TellerT.Reset();
+                    TellerT.SetRange("No.", BankAccountLedgerEntry."Document No.");
+                    if TellerT.FindFirst() then begin
+                        TellerTLine.Reset();
+                        TellerTLine.SetRange("Transaction No.", TellerT."No.");
+                        if TellerTLine.FindSet() then begin
+                            repeat
+                            
+                            until TellerTLine.Next() = 0;
+                        end;
+                    end;
+                end;
             }
             trigger OnPreDataItem()
             begin
@@ -55,6 +69,8 @@ report 50014 "Cashier Transactions Report"
                 FnUpdateRemainingBal();
                 OpenBal := 0;
                 ClosingBal := 0;
+                Withdrawals := 0;
+                Deposits := 0;
                 PrevDate := CalcDate('-1D', GetRangeMin("Bank Account"."Date Filter"));
                 BankL.Reset();
                 BankL.SetRange("Bank Account No.", "Bank Account"."No.");
@@ -121,4 +137,11 @@ report 50014 "Cashier Transactions Report"
         OpenBal: Decimal;
         ClosingBal: Decimal;
         BankL: Record "Bank Account Ledger Entry";
+        Withdrawals: Decimal;
+        Deposits: Decimal;
+        TellerT: Record "Teller Transaction Header";
+        TellerTLine: Record "Teller Transaction Line";
+        TransType: Record "Transaction -Type";
+
+
 }

@@ -28,14 +28,6 @@
                 {
                     ApplicationArea = All;
                 }
-                field("Agent Code"; Rec."Agent Code")
-                {
-                    ApplicationArea = All;
-                }
-                field("Agent Name"; Rec."Agent Name")
-                {
-                    ApplicationArea = All;
-                }
                 field("Total Payout Amount"; Rec."Total Payout Amount")
                 {
                     ApplicationArea = All;

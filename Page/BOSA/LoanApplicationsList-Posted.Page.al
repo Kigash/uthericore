@@ -83,6 +83,18 @@
                 {
                     ApplicationArea = All;
                 }
+                field("Outstanding Principal"; Rec."Outstanding Principal")
+                {
+                    ApplicationArea = All;
+                }
+                field("Outstanding Interest"; Rec."Outstanding Interest")
+                {
+                    ApplicationArea = All;
+                }
+                field("Outstanding Penalty"; Rec."Outstanding Penalty")
+                {
+                    ApplicationArea = All;
+                }
                 field("Outstanding Balance"; Rec."Outstanding Balance")
                 {
                     ApplicationArea = All;

@@ -2969,13 +2969,12 @@ codeunit 50010 "BOSA Management"
             GlobalSetup.GET;
             PayoutSetup.GET;
             SourceCodeSetup.GET;
-            RemittanceAgentSetup.GET("Agent Code");
             CALCFIELDS("Total Payout Amount");
 
             SourceCodeSetup.TestField(Payout);
             GlobalManagement.ClearJournal(PayoutSetup."Payout Template Name", PayoutSetup."Payout Batch Name");
 
-            GlobalManagement.CreateJournal(PayoutSetup."Payout Template Name", PayoutSetup."Payout Batch Name", "No.", "No.", TODAY, RemittanceAgentSetup."Account Type",
+            GlobalManagement.CreateJournal(PayoutSetup."Payout Template Name", PayoutSetup."Payout Batch Name", "No.", "No.", TODAY, BalAccountTypeEnum::"Bank Account",
                           PayoutHeader."Bank Account", Description + Text013, "Total Payout Amount", '', '', SourceCodeSetup.Payout, "Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
 
             PayoutLine.RESET;
@@ -2985,14 +2984,6 @@ codeunit 50010 "BOSA Management"
                     IF PayoutLine."Charge Amount" > 0 THEN BEGIN
                         GlobalManagement.CreateJournal(PayoutSetup."Payout Template Name", PayoutSetup."Payout Batch Name", "No.", "No.", TODAY, AccountTypeEnum::"G/L Account",
                                       PayoutSetup."Charges G/L Account", Description + Text016, -PayoutLine."Charge Amount", '', '', SourceCodeSetup."Payout", PayoutLine."Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
-                    END;
-                    IF PayoutLine."Excise Duty Amount" > 0 THEN BEGIN
-                        GlobalManagement.CreateJournal(PayoutSetup."Payout Template Name", PayoutSetup."Payout Batch Name", "No.", "No.", TODAY, AccountTypeEnum::"G/L Account",
-                                      GlobalSetup."Excise Duty G/L Account", Description + Text010, -PayoutLine."Excise Duty Amount", '', '', SourceCodeSetup."Payout", PayoutLine."Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
-                    END;
-                    IF PayoutLine."Withholding Tax Amount" > 0 THEN BEGIN
-                        GlobalManagement.CreateJournal(PayoutSetup."Payout Template Name", PayoutSetup."Payout Batch Name", "No.", "No.", TODAY, AccountTypeEnum::"G/L Account",
-                                      GlobalSetup."Withholding Tax G/L Account", Description + Text011, -PayoutLine."Withholding Tax Amount", '', '', SourceCodeSetup."Payout", PayoutLine."Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
                     END;
                     Vendor.RESET;
                     Vendor.SETRANGE("Member No.", PayoutLine."Member No.");
@@ -3013,10 +3004,10 @@ codeunit 50010 "BOSA Management"
                 "Posted Date" := TODAY;
                 "Posted Time" := TIME;
                 if MODIFY then begin
-                    if Confirm(SendPayoutNotificationConfirmMsg) then begin
+                    /*if Confirm(SendPayoutNotificationConfirmMsg) then begin
                         RecRef.GETTABLE(PayoutHeader);
                         SendNotification(RecRef);
-                    end;
+                    end;*/
                 end;
             END ELSE BEGIN
                 IF GETLASTERRORTEXT <> '' THEN

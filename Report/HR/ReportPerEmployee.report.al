@@ -2,7 +2,7 @@ report 50252 "Report Per Employee"
 {
 
     DefaultLayout = RDLC;
-    RDLCLayout = 'Report\HR\ReportPerEmployee.rdl';
+    RDLCLayout = 'Report\HR\ReportPerEmployee1.rdl';
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
 
@@ -125,12 +125,12 @@ report 50252 "Report Per Employee"
 
     trigger OnInitReport();
     begin
-         CompanyInformation.GET;
+        CompanyInformation.GET;
     end;
 
     trigger OnPreReport();
     begin
-         CompanyInformation.CALCFIELDS(Picture);
+        CompanyInformation.CALCFIELDS(Picture);
 
     end;
 

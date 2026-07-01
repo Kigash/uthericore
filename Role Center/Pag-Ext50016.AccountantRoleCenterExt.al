@@ -294,6 +294,13 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
                 RunPageMode = Create;
                 ApplicationArea = All;
             }
+            action(ApprovedFundTransfer)
+            {
+                Caption = 'Fund Transfer Approved';
+                RunObject = page "Fund Transfer List-Approved";
+                RunPageMode = Create;
+                ApplicationArea = All;
+            }
             action(NewMobileBankingApplication)
             {
                 Caption = 'New Mobile Banking Application';
@@ -384,7 +391,7 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
                 action(UserSettings)
                 {
                     Caption = 'User Role Settings';
-                    RunObject = Page "User Settings";
+                    RunObject = Page 9206;
                     ApplicationArea = All;
                 }
                 action(UserSetup)
@@ -498,7 +505,7 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
                 action(TransactionTypes)
                 {
                     Caption = 'Teller Transaction Types';
-                    RunObject = Page "Transaction Types";
+                    RunObject = Page "Transaction Types List";
                     ApplicationArea = All;
                 }
             }
@@ -541,6 +548,20 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
                     }
                 }
 
+            }
+            group(TellerTreasuryACS)
+            {
+                Caption = 'Cashiers and Treasury Accounts';
+                action("Treasury Account List")
+                {
+                    RunObject = Page "Treasury List";
+                    ApplicationArea = All;
+                }
+                action("Cashier Account List")
+                {
+                    RunObject = Page "Cashier Account List";
+                    ApplicationArea = All;
+                }
             }
             group(Members)
             {
@@ -1219,20 +1240,7 @@ pageextension 50016 "Accountant RoleCenter Ext" extends "Accountant Role Center"
         }
         addafter(PaymentJournals)
         {
-            group(TellerTreasuryACS)
-            {
-                Caption = 'Cashiers and Treasury Accounts';
-                action("Treasury Account List")
-                {
-                    RunObject = Page "Treasury List";
-                    ApplicationArea = All;
-                }
-                action("Cashier Account List")
-                {
-                    RunObject = Page "Cashier Account List";
-                    ApplicationArea = All;
-                }
-            }
+
             group("Treasury Return To Bank")
             {
                 action("New Treasury Return To Bank")

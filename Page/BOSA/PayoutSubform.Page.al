@@ -20,6 +20,14 @@
                 {
                     ApplicationArea = All;
                 }
+                field("Account No."; Rec."Account No.")
+                {
+                    ApplicationArea = All;
+                }
+                field("Account Name"; Rec."Account Name")
+                {
+                    ApplicationArea = All;
+                }
                 field("Gross Amount"; Rec."Gross Amount")
                 {
                     ApplicationArea = All;
@@ -49,9 +57,21 @@
                 PromotedOnly = true;
                 ApplicationArea = All;
                 trigger OnAction()
+                var
+                    PayoutChargeRange: Record "Payout Charge Range";
                 begin
                     PayoutHeader.GET(Rec."Document No.");
-                    PayoutHeader.TESTFIELD(Status, PayoutHeader.Status::New);
+                    PayoutHeader.TESTFIELD(Posted, false);
+
+                    if PayoutHeader."Charge Calculation Method" = PayoutHeader."Charge Calculation Method"::"Flat Amount" then
+                        PayoutHeader.TESTFIELD("Flat Charge Amount");
+
+                    if PayoutHeader."Charge Calculation Method" = PayoutHeader."Charge Calculation Method"::Range then begin
+                        PayoutChargeRange.Reset();
+                        PayoutChargeRange.SETRANGE("Document No.", PayoutHeader."No.");
+                        IF PayoutChargeRange.ISEMPTY THEN
+                            ERROR('You must specify at least one charge range for the selected charge calculation method.');
+                    end;
 
                     CLEAR(ImportPayoutFile);
                     ImportPayoutFile.SetPayoutNo(Rec."Document No.");
@@ -65,4 +85,3 @@
         ImportPayoutFile: XMLport "Import Payout File";
         PayoutHeader: Record "Payout Header";
 }
-

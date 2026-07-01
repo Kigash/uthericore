@@ -49,6 +49,7 @@
             field("Account No. 2"; Rec."Account No. 2")
             {
                 ApplicationArea = All;
+
                 trigger OnValidate()
                 begin
                     Clear(Rec."Posting Group");

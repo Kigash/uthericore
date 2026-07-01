@@ -5,7 +5,7 @@ report 50104 "Payout Report"
     DefaultLayout = RDLC;
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = All;
-    RDLCLayout = 'Report/BOSA/Payout Report.rdlc';
+    RDLCLayout = 'Report/BOSA/Payout Report.rdl';
 
     dataset
     {

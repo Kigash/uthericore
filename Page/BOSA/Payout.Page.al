@@ -37,81 +37,91 @@
                         CurrPage.Update();
                     end;
                 }
-                field("Flat Charge Amount"; Rec."Flat Charge Amount")
+                group(Flatcharge)
                 {
-                    ApplicationArea = All;
-                    Visible = Rec."Charge Calculation Method" = 0;
-                }
-                field("Charge Percentage"; Rec."Charge Percentage")
-                {
-                    ApplicationArea = All;
-                    Visible = Rec."Charge Calculation Method" = 1;
-                }
-                field("Payment Method"; Rec."Payment Method")
-                {
-                    ApplicationArea = All;
-                }
-                field("Total Payout Amount"; Rec."Total Payout Amount")
-                {
-                    ApplicationArea = All;
-                }
-                field("Created By"; Rec."Created By")
-                {
-                    Importance = Additional;
-                    ApplicationArea = All;
-                }
-                field("Created Date"; Rec."Created Date")
-                {
-                    Importance = Additional;
-                    ApplicationArea = All;
-                }
-                field("Created Time"; Rec."Created Time")
-                {
-                    Importance = Additional;
-                    ApplicationArea = All;
-                }
-                group(ApprovedBy)
-                {
-                    Caption = 'Approved by';
-                    Visible = Rec."Status" = 2;
-                    field("Approved By"; Rec."Approved By")
-                    {
-                        ApplicationArea = All;
-                    }
-                    field("Approved Date"; Rec."Approved Date")
-                    {
-                        ApplicationArea = All;
-                    }
-                    field("Approved Time"; Rec."Approved Time")
+                    Caption = '';
+                    Visible = Rec."Charge Calculation Method" = Rec."Charge Calculation Method"::"Flat Amount";
+                    field("Flat Charge Amount"; Rec."Flat Charge Amount")
                     {
                         ApplicationArea = All;
                     }
                 }
-                group(PostedBy)
+                group(Percentagecharge)
                 {
-                    Caption = 'Posted By';
-                    Visible = Rec."Posted" = TRUE;
-                    field("Posted By"; Rec."Posted By")
+                    Caption = '';
+                    Visible = Rec."Charge Calculation Method" = Rec."Charge Calculation Method"::Percentage;
+                    field("Charge Percentage"; Rec."Charge Percentage")
                     {
                         ApplicationArea = All;
-                    }
-                    field("Posted Date"; Rec."Posted Date")
-                    {
-                        ApplicationArea = All;
-                    }
-                    field("Posted Time"; Rec."Posted Time")
-                    {
-                        ApplicationArea = All;
-                    }
-                    field(Posted; Rec.Posted)
-                    {
                     }
                 }
-                field(Status; Rec.Status)
+            }
+            field("Payment Method"; Rec."Payment Method")
+            {
+                ApplicationArea = All;
+            }
+            field("Total Payout Amount"; Rec."Total Payout Amount")
+            {
+                ApplicationArea = All;
+            }
+            field("Created By"; Rec."Created By")
+            {
+                Importance = Additional;
+                ApplicationArea = All;
+            }
+            field("Created Date"; Rec."Created Date")
+            {
+                Importance = Additional;
+                ApplicationArea = All;
+            }
+            field("Created Time"; Rec."Created Time")
+            {
+                Importance = Additional;
+                ApplicationArea = All;
+            }
+            group(ApprovedBy)
+            {
+                Caption = 'Approved by';
+                Visible = Rec."Status" = 2;
+                field("Approved By"; Rec."Approved By")
+                {
+                    ApplicationArea = All;
+                }
+                field("Approved Date"; Rec."Approved Date")
+                {
+                    ApplicationArea = All;
+                }
+                field("Approved Time"; Rec."Approved Time")
                 {
                     ApplicationArea = All;
                 }
             }
+            group(PostedBy)
+            {
+                Caption = 'Posted By';
+                Visible = Rec."Posted" = TRUE;
+                field("Posted By"; Rec."Posted By")
+                {
+                    ApplicationArea = All;
+                }
+                field("Posted Date"; Rec."Posted Date")
+                {
+                    ApplicationArea = All;
+                }
+                field("Posted Time"; Rec."Posted Time")
+                {
+                    ApplicationArea = All;
+                }
+                field(Posted; Rec.Posted)
+                {
+                }
+            }
+            field(Status; Rec.Status)
+            {
+                ApplicationArea = All;
+                Visible = false;
+            }
+
             // Add the new part for Charge Ranges below
             part(PayoutChargeRange; "Payout Charge Range")
             {
@@ -151,7 +161,8 @@
                 PromotedCategory = Category4;
                 PromotedOnly = true;
                 ToolTip = 'Send an approval request.';
-                Visible = IsVisibleSendApprovalRequest;
+                //Visible = IsVisibleSendApprovalRequest;
+                Visible = false;
 
                 trigger OnAction()
                 var
@@ -176,7 +187,8 @@
                 PromotedCategory = Category4;
                 PromotedOnly = true;
                 ToolTip = 'Cancel the approval request.';
-                Visible = IsVisibleCancelApprovalRequest;
+                //Visible = IsVisibleCancelApprovalRequest;
+                Visible = false;
 
                 trigger OnAction()
                 var
@@ -197,7 +209,8 @@
                 PromotedOnly = true;
                 Scope = Repeater;
                 ToolTip = 'Approve the requested changes.';
-                Visible = IsVisibleApproveAction;
+                //Visible = IsVisibleApproveAction;
+                Visible = false;
 
                 trigger OnAction()
                 var
@@ -225,7 +238,8 @@
                 PromotedOnly = true;
                 Scope = Repeater;
                 ToolTip = 'Reject the approval request.';
-                Visible = IsVisibleRejectAction;
+                //Visible = IsVisibleRejectAction;
+                Visible = false;
 
                 trigger OnAction()
                 var
@@ -252,7 +266,8 @@
                 PromotedIsBig = true;
                 Scope = Repeater;
                 ToolTip = 'Delegate the approval to a substitute approver.';
-                Visible = IsVisibleDelegateAction;
+                //Visible = IsVisibleDelegateAction;
+                Visible = false;
 
                 trigger OnAction()
                 var
@@ -298,13 +313,13 @@
                 PromotedCategory = "Report";
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                Visible = IsvisiblePrint;
+                Visible = true;
 
                 trigger OnAction()
                 begin
                     PayoutHeader.GET(Rec."No.");
                     PayoutHeader.SETRECFILTER;
-                    //REPORT.RUN(REPORT::"Payout Report", TRUE, FALSE, PayoutHeader);
+                    REPORT.RUN(REPORT::"Payout Report", TRUE, FALSE, PayoutHeader);
                 end;
             }
         }
@@ -331,7 +346,7 @@
 
     local procedure PageVisibility()
     begin
-        IF Rec.Status = Rec.Status::New THEN BEGIN
+        /*IF Rec.Status = Rec.Status::New THEN BEGIN
             IsVisibleCancelApprovalRequest := TRUE;
             IsVisibleSendApprovalRequest := TRUE;
             IsVisiblePost := FALSE;
@@ -354,7 +369,12 @@
             IsVisiblePost := TRUE;
         END;
         IF Rec.Posted THEN
-            IsVisiblePost := FALSE;
+            IsVisiblePost := FALSE;*/
+
+        if Rec.Posted then
+            IsVisiblePost := FALSE
+        else
+            IsVisiblePost := TRUE;
     end;
 
     local procedure PageEditable()

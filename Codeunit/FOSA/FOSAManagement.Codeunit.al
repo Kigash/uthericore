@@ -112,10 +112,6 @@ codeunit 50001 "FOSA Management"
             AccountOpeningSetup.Get();
             AccountType.RESET;
             AccountType.SETRANGE("Open Automatically", TRUE);
-            if Member.Category = Member.Category::Group then
-                AccountType.SETRANGE("Applies to Member Category", AccountType."Applies to Member Category"::Group);
-            if Member.Category = Member.Category::Individual then
-                AccountType.SETRANGE("Applies to Member Category", AccountType."Applies to Member Category"::Individual);
             If AccountType.FINDSET then begin
                 REPEAT
                     If AccountOpeningSetup."Account No. Format" = AccountOpeningSetup."Account No. Format"::"No. Series Only" then

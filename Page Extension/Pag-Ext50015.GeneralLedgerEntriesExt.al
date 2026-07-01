@@ -87,8 +87,8 @@ pageextension 50015 "General Ledger Entries Ext" extends "General Ledger Entries
     trigger OnAfterGetRecord()
     begin
         if (Rec."Member No." = '') or (Rec."Member Name" = '') or (Rec."Product Name" = '') or (Rec."Global Dimension 1 Code" = '') then begin
-            FnIsMemberTransaction(Rec."Transaction No.", Rec."Member No.", Rec."Member Name", Rec."Document No.", Rec."Product Name", Rec."Global Dimension 1 Code", Rec.Amount);
-            Rec.Modify;
+            // FnIsMemberTransaction(Rec."Transaction No.", Rec."Member No.", Rec."Member Name", Rec."Document No.", Rec."Product Name", Rec."Global Dimension 1 Code", Rec.Amount);
+            //Rec.Modify;
         end;
 
         RunningBalance := 0;

@@ -148,7 +148,7 @@ table 50043 "Teller Transaction Line"
                         if not TellerUserSetup."Withdrawal Allowed" then
                             Error(WithdrawalNotAllowedErr1);
                     end;
-                    if TransactionType.Type = TransactionType.Type::"Teller Cash Deposit" then begin
+                    if (TransactionType.Type = TransactionType.Type::"Teller Cash Deposit") then begin
                         if not TellerUserSetup."Deposit Allowed" then
                             Error(DepositNotAllowedErr1);
                     end;
@@ -160,7 +160,7 @@ table 50043 "Teller Transaction Line"
                 Clear("Is Cheque");
 
                 if TransType.Get("Transaction Type") then begin
-                    if (TransType.Type = TransType.Type::"Teller Cheque Deposit") or (TransType.Type = TransType.Type::"Teller Cheque Withdrawal") then begin
+                    if (TransType.Type = TransType.Type::"Teller Cheque Deposit") or (TransType.Type = TransType.Type::"Teller Cheque Withdrawal") or (TransType.Type = TransType.Type::"Milk And Coffee Payout") then begin
                         "Is Cheque" := true
                     end else begin
                         "Is Cheque" := false;
@@ -375,6 +375,17 @@ table 50043 "Teller Transaction Line"
                             Error(WithdrawalExceededErr, FieldCaption("Line Amount"));
                     end;
                     "Debit Amount" := "Line Amount";
+                end;
+            TransactionType.Type::"Milk And Coffee Payout":
+                begin
+                    Vendor.get("Account No.");
+                    AccountType.Get(Vendor."Account Type");
+
+                    if not AccountType."Allow Deposit" then
+                        Error(DepositNotAllowedErr);
+                    if "Line Amount" > AccountType."Maximum Deposit Amount" then
+                        Error(DepositExceededErr, FieldCaption("Line Amount"));
+                    "Credit Amount" := "Line Amount";
                 end;
             TransactionType.Type::"Teller Cheque Withdrawal":
                 begin

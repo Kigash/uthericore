@@ -152,6 +152,51 @@ codeunit 50004 "Tellering & Treasury"
                                 end;
                                 GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", 3, TellerTransactionLine."Bank Acc No", TellerTransactionLine."Transaction Type" + 'Cheque No -' + TellerTransactionLine."Cheque No" + ' Member No- ' + TellerTransactionLine."Member No." + ' ' + Narration, TellerTransactionLine."Line Amount", '', '', SourceCodeSetup.Teller, UserSetup."Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
                             end;
+
+                        TransactionType.Type::"Milk And Coffee Payout":
+                            begin
+                                TellerTransactionLine.TestField("Bank Acc No");
+                                TellerTransactionLine.TestField("Cheque No");
+                                if TellerTransactionLine."Account Type" = TellerTransactionLine."Account Type"::"Savings/ shares" then begin
+                                    GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", 2, TellerTransactionLine."Account No.", TellerTransactionLine."Transaction Type" + 'Cheque No -' + TellerTransactionLine."Cheque No" + ' - Member No ' + TellerTransactionLine."Member No." + ' ' + Narration, -TellerTransactionLine."Line Amount", '', '', SourceCodeSetup.Teller, GetBranchCode(TellerTransactionLine."Member No."), BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                                end;
+
+                                GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", 2, TellerTransactionLine."Account No.", "No." + ' ' + TellerTransactionLine."Transaction Type" + '-Transaction Charges' + ' Member No- ' + TellerTransactionLine."Member No." + ' ' + Narration, TellerTransactionLine."Transaction Charge", '', '', SourceCodeSetup.Teller, GetBranchCode(TellerTransactionLine."Member No."), BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                                GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", TransactionType."Settlement Account Type", TransactionType."Settlement Account No.", "No." + ' ' + TellerTransactionLine."Transaction Type" + '-Transaction Charges' + ' Member No- ' + TellerTransactionLine."Member No." + ' ' + Narration, -TellerTransactionLine."Transaction Charge", '', '', SourceCodeSetup.Teller, UserSetup."Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+
+                                if TellerTransactionLine."Account Type" = TellerTransactionLine."Account Type"::Loans then begin
+                                    LoanApplication.get(TellerTransactionLine."Account No.");
+                                    OriginalPostingGroup := LoanApplication."Loan Product Type";
+                                    LoanProductType.GET(OriginalPostingGroup);
+
+                                    Customer.get(TellerTransactionLine."Account No.");
+                                    Customer."Customer Posting Group" := OriginalPostingGroup;
+
+                                    GlobalManagement.CalculateLoanArrearsAndOverpayment(TellerTransactionLine."Account No.", 0D, "Transaction Date", ArrearsAmount[1], ArrearsAmount[2],
+                                    ArrearsAmount[3], ArrearsAmount[4], OverpaymentAmount[1], OverpaymentAmount[2]);
+                                    RemainingAmount := TellerTransactionLine."Line Amount";
+                                    if TellerTransactionLine."Line Amount" > ArrearsAmount[2] then begin
+                                        GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", GenJournalLine."Account Type"::Customer,
+                                                      TellerTransactionLine."Account No.", 'Interest Paid-' + "No." + 'Cheque No -' + TellerTransactionLine."Cheque No" + ' - Member No ' + TellerTransactionLine."Member No." + ' ' + Narration, -ArrearsAmount[2], LoanProductType."Interest Due Posting Group", TransactionTpeCodeSetup."Interest Paid", SourceCodeSetup.Loan, GetBranchCode(TellerTransactionLine."Member No."), BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                                        RemainingAmount -= ArrearsAmount[2];
+                                    end else begin
+                                        GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", GenJournalLine."Account Type"::Customer,
+                                                      TellerTransactionLine."Account No.", 'Interest Paid-' + "No." + 'Cheque No -' + TellerTransactionLine."Cheque No" + ' - Member No ' + TellerTransactionLine."Member No." + ' ' + Narration, -TellerTransactionLine."Line Amount", LoanProductType."Interest Due Posting Group", TransactionTpeCodeSetup."Interest Paid", SourceCodeSetup.Loan, GetBranchCode(TellerTransactionLine."Member No."), BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                                        RemainingAmount := 0;
+                                    end;
+                                    if RemainingAmount > 0 then begin
+                                        Customer.get(TellerTransactionLine."Account No.");
+                                        GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", GenJournalLine."Account Type"::Customer,
+                                                      TellerTransactionLine."Account No.", 'Principal Paid-' + "No." + 'Cheque No -' + TellerTransactionLine."Cheque No" + ' - Member No ' + TellerTransactionLine."Member No." + ' ' + Narration, -RemainingAmount, OriginalPostingGroup, TransactionTpeCodeSetup."Principal Paid", SourceCodeSetup.Loan, GetBranchCode(TellerTransactionLine."Member No."), BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                                    end;
+                                end;
+
+                                if TellerTransactionLine."Account Type" = TellerTransactionLine."Account Type"::"G/L Account" then begin
+                                    GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", 0, TellerTransactionLine."Account No.", TellerTransactionLine."Transaction Type" + 'Cheque No -' + TellerTransactionLine."Cheque No" + ' Member No- ' + TellerTransactionLine."Member No." + ' ' + Narration, -TellerTransactionLine."Line Amount", '', '', SourceCodeSetup.Teller, GetBranchCode(TellerTransactionLine."Member No."), BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                                end;
+                                GlobalManagement.CreateJournal(JournalTemplateName, JournalBatchName, "No.", "No.", "Transaction Date", 3, TellerTransactionLine."Bank Acc No", TellerTransactionLine."Transaction Type" + 'Cheque No -' + TellerTransactionLine."Cheque No" + ' Member No- ' + TellerTransactionLine."Member No." + ' ' + Narration, TellerTransactionLine."Line Amount", '', '', SourceCodeSetup.Teller, UserSetup."Global Dimension 1 Code", BalAccountTypeEnum::"G/L Account", '', AppliesToDocTypeEnum::" ", '');
+                            end;
+
                         TransactionType.Type::"Bank Deposit":
                             begin
                                 TellerTransactionLine.TestField("Bank Acc No");
@@ -262,7 +307,7 @@ codeunit 50004 "Tellering & Treasury"
         if TransactionCharge.FindSet() then begin
             repeat
                 if TellerTransType.Get(TransactionTypeCode) then begin
-                    if (TellerTransType.Type = TellerTransType.Type::"Teller Cash Withdrawal") or (TellerTransType.Type = TellerTransType.Type::"Teller Cheque Withdrawal") then begin
+                    if (TellerTransType.Type = TellerTransType.Type::"Teller Cash Withdrawal") or (TellerTransType.Type = TellerTransType.Type::"Teller Cheque Withdrawal") or (TellerTransType.Type = TellerTransType.Type::"Milk And Coffee Payout") then begin
                         if ((TransactionAmount >= TransactionCharge."Minimum Amount") and (TransactionAmount <= TransactionCharge."Maximum Amount")) then begin
                             ChargeAmount := TransactionCharge."Settlement Amount  (SACCO)";
                         end;

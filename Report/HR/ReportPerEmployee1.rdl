@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>2in</Height>
+        <Style />
+      </Body>
+      <Width>6.5in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="No_Employee">
+          <DataField>No_Employee</DataField>
+        </Field>
+        <Field Name="FirstName_Employee">
+          <DataField>FirstName_Employee</DataField>
+        </Field>
+        <Field Name="MiddleName_Employee">
+          <DataField>MiddleName_Employee</DataField>
+        </Field>
+        <Field Name="LastName_Employee">
+          <DataField>LastName_Employee</DataField>
+        </Field>
+        <Field Name="CountryRegionCode_Employee">
+          <DataField>CountryRegionCode_Employee</DataField>
+        </Field>
+        <Field Name="FullName">
+          <DataField>FullName</DataField>
+        </Field>
+        <Field Name="Disability_Employee">
+          <DataField>Disability_Employee</DataField>
+        </Field>
+        <Field Name="DisabilityDescription_Employee">
+          <DataField>DisabilityDescription_Employee</DataField>
+        </Field>
+        <Field Name="Age_Employee">
+          <DataField>Age_Employee</DataField>
+        </Field>
+        <Field Name="Religion">
+          <DataField>Religion</DataField>
+        </Field>
+        <Field Name="Tribe">
+          <DataField>Tribe</DataField>
+        </Field>
+        <Field Name="Resident_Estate_">
+          <DataField>Resident_Estate_</DataField>
+        </Field>
+        <Field Name="Street_Address_Court">
+          <DataField>Street_Address_Court</DataField>
+        </Field>
+        <Field Name="House_No_">
+          <DataField>House_No_</DataField>
+        </Field>
+        <Field Name="City">
+          <DataField>City</DataField>
+        </Field>
+        <Field Name="MaritalStatus_Employee">
+          <DataField>MaritalStatus_Employee</DataField>
+        </Field>
+        <Field Name="EmploymentDate">
+          <DataField>EmploymentDate</DataField>
+        </Field>
+        <Field Name="Status_Employee">
+          <DataField>Status_Employee</DataField>
+        </Field>
+        <Field Name="JobTitle_Employee">
+          <DataField>JobTitle_Employee</DataField>
+        </Field>
+        <Field Name="Global_Dimension_1_Code">
+          <DataField>Global_Dimension_1_Code</DataField>
+        </Field>
+        <Field Name="Global_Dimension_2_Code">
+          <DataField>Global_Dimension_2_Code</DataField>
+        </Field>
+        <Field Name="Probation_Period">
+          <DataField>Probation_Period</DataField>
+        </Field>
+        <Field Name="Probation_End_Date">
+          <DataField>Probation_End_Date</DataField>
+        </Field>
+        <Field Name="Grade">
+          <DataField>Grade</DataField>
+        </Field>
+        <Field Name="Bank_Branch_No_">
+          <DataField>Bank_Branch_No_</DataField>
+        </Field>
+        <Field Name="Bank_Account_No_">
+          <DataField>Bank_Account_No_</DataField>
+        </Field>
+        <Field Name="Basic_Pay">
+          <DataField>Basic_Pay</DataField>
+        </Field>
+        <Field Name="Basic_PayFormat">
+          <DataField>Basic_PayFormat</DataField>
+        </Field>
+        <Field Name="E_Mail">
+          <DataField>E_Mail</DataField>
+        </Field>
+        <Field Name="Extension_Employee">
+          <DataField>Extension_Employee</DataField>
+        </Field>
+        <Field Name="CompanyEMail_Employee">
+          <DataField>CompanyEMail_Employee</DataField>
+        </Field>
+        <Field Name="BloodType_Employee">
+          <DataField>BloodType_Employee</DataField>
+        </Field>
+        <Field Name="MobilePhoneNo_Employee">
+          <DataField>MobilePhoneNo_Employee</DataField>
+        </Field>
+        <Field Name="BirthDate_Employee">
+          <DataField>BirthDate_Employee</DataField>
+        </Field>
+        <Field Name="National_ID">
+          <DataField>National_ID</DataField>
+        </Field>
+        <Field Name="PINNumber_Employee">
+          <DataField>PINNumber_Employee</DataField>
+        </Field>
+        <Field Name="NSSFNo_Employee">
+          <DataField>NSSFNo_Employee</DataField>
+        </Field>
+        <Field Name="NHIFNo_Employee">
+          <DataField>NHIFNo_Employee</DataField>
+        </Field>
+        <Field Name="HELBNo_Employee">
+          <DataField>HELBNo_Employee</DataField>
+        </Field>
+        <Field Name="CountyCode_Employee">
+          <DataField>CountyCode_Employee</DataField>
+        </Field>
+        <Field Name="Address2_Employee">
+          <DataField>Address2_Employee</DataField>
+        </Field>
+        <Field Name="PostCode_Employee">
+          <DataField>PostCode_Employee</DataField>
+        </Field>
+        <Field Name="PhoneNo_Employee">
+          <DataField>PhoneNo_Employee</DataField>
+        </Field>
+        <Field Name="Gender_Employee">
+          <DataField>Gender_Employee</DataField>
+        </Field>
+        <Field Name="EMail_Employee">
+          <DataField>EMail_Employee</DataField>
+        </Field>
+        <Field Name="Picture_Employee">
+          <DataField>Picture_Employee</DataField>
+        </Field>
+        <Field Name="Image_Employee">
+          <DataField>Image_Employee</DataField>
+        </Field>
+        <Field Name="CompanyInformation_Name">
+          <DataField>CompanyInformation_Name</DataField>
+        </Field>
+        <Field Name="CompanyInformation_Address">
+          <DataField>CompanyInformation_Address</DataField>
+        </Field>
+        <Field Name="CompanyInformation_City">
+          <DataField>CompanyInformation_City</DataField>
+        </Field>
+        <Field Name="CompanyInformation_PostCode">
+          <DataField>CompanyInformation_PostCode</DataField>
+        </Field>
+        <Field Name="CompanyInformation_Picture">
+          <DataField>CompanyInformation_Picture</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

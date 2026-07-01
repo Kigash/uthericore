@@ -66,7 +66,7 @@ tableextension 50015 GeneralJournalLineExt extends "Gen. Journal Line"
         }
         field(50002; "Account No. 2"; code[20])
         {
-            Caption = 'Account No';
+            Caption = 'Member Account No.';
             TableRelation = IF ("Account Type" = CONST("G/L Account")) "G/L Account" WHERE("Account Type" = CONST(Posting),
                                                                                           Blocked = CONST(false))
             else
